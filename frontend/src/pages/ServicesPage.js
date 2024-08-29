@@ -3,7 +3,7 @@ import React from 'react';
 function ServicesPage() {
   return (
     <div>
-      <h1>Welcome to the Home Page</h1>
+      <h1>Welcome to the Services Page</h1>
     </div>
   );
 }
