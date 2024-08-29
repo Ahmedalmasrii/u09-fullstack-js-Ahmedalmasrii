@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "concurrently \"npm run dev\" \"npm start --prefix ../frontend\"",
     "dev": "nodemon server.js"
   },
   "keywords": [],
@@ -19,6 +19,7 @@
   },
   "description": "",
   "devDependencies": {
+    "concurrently": "^8.2.2",
     "nodemon": "^3.1.4"
   }
 }
