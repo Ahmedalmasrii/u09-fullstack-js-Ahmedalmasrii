@@ -87,4 +87,21 @@ const deleteUser = async (req, res) => {
   }
 };
 
-module.exports = { registerUser, loginUser, getAllUsers, deleteUser };
+//profil data inhämtning 
+const getUserProfile = async (req, res) => {
+  try {
+    //  hitta användare baserat på id från tokenet F
+    const user = await User.findById(req.user._id).select('-password'); // Excluderade fel lösenord
+
+    if (user) {
+      res.json(user);
+    } else {
+      res.status(404);
+      throw new Error('User not found');
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message || 'Server error' });
+  }
+};
+
+module.exports = { registerUser, loginUser, getAllUsers, deleteUser, getUserProfile };
