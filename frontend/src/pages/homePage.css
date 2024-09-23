@@ -1,0 +1,130 @@
+
+.homepage {
+  font-family: 'Arial', sans-serif;
+  color: #333;
+}
+
+.header {
+  position: relative;
+  color: #fff;
+  padding: 0;
+  text-align: center;
+  overflow: hidden;
+  max-height: 400px;
+}
+
+.header img {
+  width: 100%;
+  height: auto;
+  max-height: 400px;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto;
+}
+
+.header-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 600px;
+}
+
+.header h1 {
+  font-size: 36px;
+  margin-bottom: 15px;
+}
+
+.header p {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.cta-button {
+  padding: 10px 20px;
+  font-size: 18px;
+  color: #fff;
+  background-color: #ffdd57;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #e6c044;
+}
+
+.main-content {
+  padding: 30px 15px;
+}
+
+.about-us {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.services {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.services h2 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.service-list {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.service-item {
+  flex: 1 1 100%;
+  padding: 20px;
+  margin: 10px 0;
+  background-color: #f4f4f4;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.service-item h3 {
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.service-item p {
+  font-size: 14px;
+  color: #666;
+}
+
+/* Media queries för responsiv design */
+@media (min-width: 768px) {
+  .service-item {
+    flex: 1 1 30%;
+    margin: 10px;
+  }
+
+  .header h1 {
+    font-size: 48px;
+  }
+
+  .header p {
+    font-size: 20px;
+  }
+
+  .cta-button {
+    font-size: 18px;
+  }
+
+  .header-content {
+    width: auto;
+  }
+}
