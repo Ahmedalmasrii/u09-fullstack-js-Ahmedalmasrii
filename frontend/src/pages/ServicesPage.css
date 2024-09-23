@@ -1,0 +1,101 @@
+
+.services-page {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    padding: 20px;
+    text-align: center;
+}
+
+.services-header {
+    margin-bottom: 30px;
+}
+
+.services-header h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.services-header p {
+    font-size: 18px;
+    color: #666;
+}
+
+.services-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.service-item {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 90%;
+    max-width: 500px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+
+.service-item h2 {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.service-item p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.service-item.active {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.service-details {
+    margin-top: 10px;
+    animation: slideDown 0.5s ease-in-out;
+}
+
+.request-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #5ca9fb;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.request-button:hover {
+    background-color: #3b82f6;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsiv design */
+@media (max-width: 768px) {
+    .services-list {
+        width: 100%;
+    }
+
+    .service-item {
+        width: 100%;
+        max-width: none;
+    }
+}
