@@ -1,0 +1,41 @@
+
+.footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-around;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-section {
+    max-width: 300px;
+}
+
+.footer-section h4 {
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #ffdd57;
+    /* Exempel på accentfärg */
+}
+
+.footer-section p,
+.footer-section a {
+    font-size: 14px;
+    color: #ddd;
+    text-decoration: none;
+}
+
+.footer-section a:hover {
+    color: #ffdd57;
+    /* Exempel på hover-effekt */
+}
