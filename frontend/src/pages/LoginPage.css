@@ -1,0 +1,202 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #f3f4f6, #e5e7eb); 
+    overflow-x: hidden; 
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+    background: linear-gradient(135deg, #f3f4f6, #e5e7eb); 
+    position: relative;
+}
+
+.login-box {
+    background: #ffffff; 
+    border-radius: 12px; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: 400px; 
+    width: 80%; 
+    text-align: center;
+    position: relative;
+    z-index: 10; 
+}
+
+.login-title {
+    margin-bottom: 30px;
+    color: #333; 
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group {
+    margin-bottom: 20px;
+    text-align: left; 
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #555;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px; 
+    transition: border-color 0.3s ease;
+}
+
+.input-group input:focus {
+    border-color: #a5b4fc; 
+    outline: none; 
+}
+
+.login-button {
+    background: #764ba2; 
+    color: #fff;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    position: relative;
+}
+
+.login-button:hover {
+    background: #667eea; 
+}
+
+.login-footer {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #555; 
+}
+
+.register-link {
+    color: #764ba2;
+    font-weight: bold;
+    text-decoration: none; 
+}
+
+.register-link:hover {
+    color: #667eea; 
+}
+
+.error-message {
+    color: #f87171; 
+    margin-top: 10px;
+}
+
+/* Animation för snurrande hjul */
+.loading-spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left-color: #764ba2;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: spin 1s linear infinite;
+    margin: 10px auto 0;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Fyrverkerier */
+.firework {
+    width: 6px;
+    height: 50px;
+    background: radial-gradient(circle, #ff4b5c 50%, transparent 60%);
+    position: absolute;
+    bottom: 50px;
+    transform-origin: bottom center;
+    animation: explode 1.5s ease-in-out infinite;
+}
+
+.firework::before,
+.firework::after {
+    content: "";
+    width: 6px;
+    height: 50px;
+    background: radial-gradient(circle, #ff4b5c 50%, transparent 60%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform-origin: bottom center;
+}
+
+.firework::before {
+    transform: rotate(45deg);
+}
+
+.firework::after {
+    transform: rotate(-45deg);
+}
+
+@keyframes explode {
+    0%, 20% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(0);
+        opacity: 0;
+    }
+}
+
+/* positioner för att placera fyrverkerier */
+.firework:nth-child(1) {
+    left: 30%;
+    animation-delay: 0s;
+}
+
+.firework:nth-child(2) {
+    left: 70%;
+    animation-delay: 0.3s;
+}
+
+.firework:nth-child(3) {
+    left: 50%;
+    animation-delay: 0.6s;
+}
+
+/* Responsiv styling */
+@media (max-width: 600px) {
+    .login-box {
+        padding: 20px;
+        max-width: 90%; /* Använd större andel av bredden */
+    }
+
+    .login-title {
+        font-size: 1.5rem;
+    }
+
+    .login-button {
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    .input-group input {
+        padding: 10px; /* Mindre padding för att passa små skärmar */
+        font-size: 14px;
+    }
+}
