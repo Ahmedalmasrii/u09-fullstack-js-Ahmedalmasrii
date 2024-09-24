@@ -1,4 +1,4 @@
-
+/* src/components/Navbar.css */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -6,7 +6,8 @@
   background-color: #333;
   padding: 10px 20px;
   position: relative;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Shadow for a professional look */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
 }
 
 .navbar-logo a {
@@ -29,20 +30,26 @@
   position: relative;
 }
 
-.navbar-links a {
+.navbar-links a,
+.dropdown-button {
   color: #fff;
   text-decoration: none;
   padding: 8px 15px;
   transition: background-color 0.3s;
   border-radius: 4px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
 }
 
-.navbar-links a:hover {
-  background-color: #555;
+.navbar-links a:hover,
+.dropdown-button:hover {
+  background-color: #7d7d7d;
 }
 
 .hamburger {
-  display: none;
+  display: none; /* Visas bara på små skärmar */
   font-size: 24px;
   background: none;
   border: none;
@@ -50,8 +57,59 @@
   cursor: pointer;
 }
 
+.logout-button {
+  background-color: #ff4b5c;
+  border: none;
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #e60023;
+}
+
+/* Message Box */
+.message-box {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  animation: slideIn 0.5s ease, fadeOut 0.5s ease 2.5s forwards;
+}
+
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    top: 0px;
+  }
+  100% {
+    opacity: 1;
+    top: 20px;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    top: 0px;
+  }
+}
+
+/* Dropdown Menu */
 .services-dropdown .dropdown-menu {
-  display: none;
+  display: block;
   position: absolute;
   top: 40px;
   left: 0;
@@ -63,17 +121,12 @@
   min-width: 200px;
 }
 
-.services-dropdown:hover .dropdown-menu,
-.dropdown-menu:hover {
-  display: block;
-}
-
-.dropdown-menu li {
+.services-dropdown .dropdown-menu li {
   list-style: none;
   margin: 0;
 }
 
-.dropdown-menu a {
+.services-dropdown .dropdown-menu a {
   color: #333;
   text-decoration: none;
   padding: 10px 20px;
@@ -81,23 +134,28 @@
   transition: background-color 0.3s;
 }
 
-.dropdown-menu a:hover {
+.services-dropdown .dropdown-menu a:hover {
   background-color: #f0f0f0;
   border-radius: 4px;
 }
 
-/* Responsive styling */
+/* Responsive Styling */
 @media (max-width: 768px) {
   .navbar-links {
     display: none;
     flex-direction: column;
     gap: 10px;
-    background-color: #333;
+    background-color: rgba(0, 0, 0, 0.9); /* Transparent background */
     position: absolute;
     top: 60px;
-    left: 0;
-    width: 100%;
-    padding: 10px 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%; /* Begränsa bredden */
+    max-width: 300px; /* Maximera bredden */
+    padding: 20px;
+    border-radius: 8px; /* Rundade hörn */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Lägg till skugga */
+    z-index: 999;
   }
 
   .navbar-links.show {
@@ -105,6 +163,39 @@
   }
 
   .hamburger {
-    display: block;
+    display: block; /* Visas på små skärmar */
+  }
+
+  .close-button {
+    display: block; /* Visas bara på små skärmar */
+    text-align: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #fff;
+    margin: 10px 0;
+    border: none;
+    background: none;
+  }
+
+  .navbar-links li {
+    width: 100%;
+    text-align: center;
+  }
+
+  .services-dropdown .dropdown-menu {
+    width: 100%;
+    box-shadow: none;
+    border-radius: 0;
+    position: relative;
+    top: 6px;
+    border-radius: 40px;
+    background: #a8a8a8a3;
+}
+  }
+
+
+@media (min-width: 769px) {
+  .close-button {
+    display: none; /* Döljer stängningsknappen på stora skärmar */
   }
 }
