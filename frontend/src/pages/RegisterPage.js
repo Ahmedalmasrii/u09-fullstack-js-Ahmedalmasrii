@@ -1,49 +1,177 @@
+// // src/pages/RegisterPage.js
+// import React, { useState } from 'react';
+// import axios from 'axios';
+// import { Link, useNavigate } from 'react-router-dom';
+// import './RegisterPage.css'; // Importera CSS-filen för styling
+
+// function RegisterPage() {
+//   const [name, setName] = useState('');
+//   const [email, setEmail] = useState('');
+//   const [password, setPassword] = useState('');
+//   const [error, setError] = useState('');
+//   const navigate = useNavigate();
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+
+//     try {
+//       const response = await axios.post('http://localhost:3000/api/users/register', { name, email, password });
+//       console.log('User registered:', response.data);
+//       // Omdirigera till inloggningssidan efter lyckad registrering
+//       navigate('/login');
+//     } catch (err) {
+//       setError(err.response.data.message);
+//     }
+//   };
+
+//   return (
+//     <div className="register-container">
+//       <div className="register-box">
+//         <h1 className="register-title">Create an Account</h1>
+//         <form onSubmit={handleSubmit} className="register-form">
+//           <div className="input-group">
+//             <label htmlFor="name">Name</label>
+//             <input
+//               type="text"
+//               id="name"
+//               placeholder="Enter your name"
+//               value={name}
+//               onChange={(e) => setName(e.target.value)}
+//               required
+//             />
+//           </div>
+//           <div className="input-group">
+//             <label htmlFor="email">Email</label>
+//             <input
+//               type="email"
+//               id="email"
+//               placeholder="Enter your email"
+//               value={email}
+//               onChange={(e) => setEmail(e.target.value)}
+//               required
+//             />
+//           </div>
+//           <div className="input-group">
+//             <label htmlFor="password">Password</label>
+//             <input
+//               type="password"
+//               id="password"
+//               placeholder="Enter your password"
+//               value={password}
+//               onChange={(e) => setPassword(e.target.value)}
+//               required
+//             />
+//           </div>
+//           <button type="submit" className="register-button">
+//             Register
+//           </button>
+//         </form>
+//         {error && <p className="error-message">{error}</p>}
+//         <div className="register-footer">
+//           Already have an account?{" "}
+//           <Link to="/login" className="login-link">
+//             Login here
+//           </Link>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default RegisterPage;
+
+
+// src/pages/RegisterPage.js
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
+import './RegisterPage.css'; // Importera CSS-filen för styling
 
 function RegisterPage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState(''); // Ny state för framgångsmeddelande
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(''); // Rensa eventuella tidigare felmeddelanden
+    setSuccess(''); // Rensa eventuella tidigare framgångsmeddelanden
 
     try {
-      const response = await axios.post('http://localhost:3000/api/users/register', { name, email, password });
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/users/register`, { name, email, password });
       console.log('User registered:', response.data);
-      // Spara token i lokal lagring eller state management
+      
+      // Sätt ett framgångsmeddelande
+      setSuccess('Registration successful! Redirecting to login...');
+      
+      // Omdirigera till inloggningssidan efter 3 sekunder
+      setTimeout(() => {
+        navigate('/login');
+      }, 3000);
     } catch (err) {
-      setError(err.response.data.message);
+      setError(err.response?.data?.message || 'Registration failed. Please try again.');
     }
   };
 
   return (
-    <div>
-      <h1>Register</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit">Register</button>
-      </form>
-      {error && <p>{error}</p>}
+    <div className="register-container">
+      <div className="register-box">
+        <h1 className="register-title">Create an Account</h1>
+        <form onSubmit={handleSubmit} className="register-form">
+          <div className="input-group">
+            <label htmlFor="name">Name</label>
+            <input
+              type="text"
+              id="name"
+              placeholder="Enter your name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          </div>
+          <div className="input-group">
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="input-group">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <button type="submit" className="register-button">
+            Register
+          </button>
+        </form>
+        
+        {/* Visa felmeddelande om registrering misslyckas */}
+        {error && <p className="error-message">{error}</p>}
+        
+        {/* Visa framgångsmeddelande om registrering lyckas */}
+        {success && <p className="success-message">{success}</p>}
+        
+        <div className="register-footer">
+          Already have an account?{" "}
+          <Link to="/login" className="login-link">
+            Login here
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }
