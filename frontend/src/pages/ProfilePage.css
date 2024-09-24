@@ -1,0 +1,101 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  background: #f4f4f4;
+}
+
+.profile-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.profile-image {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.profile-image img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+  object-fit: cover;
+}
+
+.profile-image input[type="file"] {
+  display: block;
+  margin: 10px auto 0;
+}
+
+.profile-info {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.profile-section {
+  width: 45%;
+  min-width: 200px;
+  margin-bottom: 20px;
+}
+
+.profile-section h2 {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.profile-section input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.profile-section button {
+  padding: 10px 20px;
+  border: none;
+  background: #764ba2;
+  color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.profile-section button:hover {
+  background: #667eea;
+}
+
+.bookings-list {
+  list-style: none;
+  padding: 0;
+}
+
+.bookings-list li {
+  padding: 10px;
+  margin: 10px 0;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.success-message {
+  color: #4caf50;
+  margin-top: 20px;
+}
+
+/* Responsiv design */
+@media (max-width: 600px) {
+  .profile-section {
+    width: 100%;
+  }
+}
