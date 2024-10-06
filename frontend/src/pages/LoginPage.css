@@ -1,34 +1,37 @@
-body, html {
+body,
+html {
     margin: 0;
     padding: 0;
     font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #f3f4f6, #e5e7eb); 
-    overflow-x: hidden; 
+    background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+    overflow-x: hidden;
+    min-height: 100vh;
+
 }
 
 .login-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; 
-    background: linear-gradient(135deg, #f3f4f6, #e5e7eb); 
-    position: relative;
+    height: 100vh;
+    background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+    padding: 20px;
 }
 
 .login-box {
-    background: #ffffff; 
-    border-radius: 12px; 
+    background: #ffffff;
+    border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    max-width: 400px; 
-    width: 80%; 
+    width: 100%;
+    max-width: 400px;
+    padding: 40px;
     text-align: center;
-    position: relative;
-    z-index: 10; 
 }
 
 .login-title {
     margin-bottom: 30px;
-    color: #333; 
+    color: #333;
+    font-size: 2rem;
 }
 
 .login-form {
@@ -38,7 +41,7 @@ body, html {
 
 .input-group {
     margin-bottom: 20px;
-    text-align: left; 
+    text-align: left;
 }
 
 .input-group label {
@@ -50,54 +53,56 @@ body, html {
 
 .input-group input {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     border: 1px solid #d1d5db;
-    border-radius: 8px; 
+    border-radius: 8px;
+    font-size: 16px;
     transition: border-color 0.3s ease;
 }
 
 .input-group input:focus {
-    border-color: #a5b4fc; 
-    outline: none; 
+    border-color: #a5b4fc;
+    outline: none;
 }
 
 .login-button {
-    background: #764ba2; 
+    background: #764ba2;
     color: #fff;
     border: none;
-    padding: 12px;
+    padding: 15px;
     border-radius: 8px;
     cursor: pointer;
     transition: background 0.3s ease;
     position: relative;
+    font-size: 16px;
+    /* Gör knappen mer framträdande */
 }
 
 .login-button:hover {
-    background: #667eea; 
+    background: #667eea;
 }
 
 .login-footer {
     margin-top: 20px;
     font-size: 14px;
-    color: #555; 
+    color: #555;
 }
 
 .register-link {
     color: #764ba2;
     font-weight: bold;
-    text-decoration: none; 
+    text-decoration: none;
 }
 
 .register-link:hover {
-    color: #667eea; 
+    color: #667eea;
 }
 
 .error-message {
-    color: #f87171; 
+    color: #f87171;
     margin-top: 10px;
 }
 
-/* Animation för snurrande hjul */
 .loading-spinner {
     border: 4px solid rgba(0, 0, 0, 0.1);
     border-left-color: #764ba2;
@@ -112,6 +117,7 @@ body, html {
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }
@@ -149,21 +155,24 @@ body, html {
 }
 
 @keyframes explode {
-    0%, 20% {
+
+    0%,
+    20% {
         transform: scale(0);
         opacity: 1;
     }
+
     50% {
         transform: scale(1);
         opacity: 0.8;
     }
+
     100% {
         transform: scale(0);
         opacity: 0;
     }
 }
 
-/* positioner för att placera fyrverkerier */
 .firework:nth-child(1) {
     left: 30%;
     animation-delay: 0s;
@@ -179,15 +188,15 @@ body, html {
     animation-delay: 0.6s;
 }
 
-/* Responsiv styling */
-@media (max-width: 600px) {
+
+@media (max-width: 768px) {
     .login-box {
+        max-width: 90%;
         padding: 20px;
-        max-width: 90%; /* Använd större andel av bredden */
     }
 
     .login-title {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
     }
 
     .login-button {
@@ -196,7 +205,17 @@ body, html {
     }
 
     .input-group input {
-        padding: 10px; /* Mindre padding för att passa små skärmar */
+        padding: 10px;
         font-size: 14px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .login-container {
+        padding: 40px;
+    }
+
+    .login-box {
+        padding: 50px;
     }
 }
