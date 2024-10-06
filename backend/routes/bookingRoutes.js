@@ -1,15 +1,11 @@
-const express = require("express");
+
+const express = require('express');
 const router = express.Router();
-const { protect } = require("../middlewares/authMiddleware");
-const Booking = require("../models/Booking"); 
-// Route för att hämta användarens bokningar
-router.get("/", protect, async (req, res) => {
-  try {
-    const bookings = await Booking.find({ user: req.user._id });
-    res.json(bookings);
-  } catch (error) {
-    res.status(500).json({ message: "Failed to fetch bookings" });
-  }
-});
+const { createBooking, getAllBookings, getUserBookings } = require('../controllers/bookingController');
+const { protect, admin } = require('../middlewares/authMiddleware');
+
+router.post('/', protect, createBooking);  // Skapar en ny bokning
+router.get('/mybookings', protect, getUserBookings);  // Hämtar användarens bokningar
+router.get('/', protect, admin, getAllBookings);  // Hämtar alla bokningar för admin
 
 module.exports = router;
