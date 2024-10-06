@@ -14,7 +14,8 @@ import Navbar from "./components/Navbar";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ProfilePage from "./pages/ProfilePage";
-import Footer from "./components/Footer"; // Importera Footer
+import BookingPage from "./pages/BookingPage";
+import Footer from "./components/Footer";
 
 const PrivateRoute = ({ children }) => {
   return localStorage.getItem("token") ? children : <Navigate to="/login" />;
@@ -32,6 +33,7 @@ function App() {
           <Route path="/services" element={<ServicesPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/booking" element={<BookingPage />} />
           <Route
             path="/profile"
             element={
@@ -41,7 +43,7 @@ function App() {
             }
           />
         </Routes>
-        <Footer /> {/* Footer kommer visas längst ner på alla sidor */}
+        <Footer />
       </div>
     </Router>
   );
