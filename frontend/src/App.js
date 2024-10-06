@@ -1,5 +1,3 @@
-// src/App.js
-import React from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -14,11 +12,17 @@ import Navbar from "./components/Navbar";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ProfilePage from "./pages/ProfilePage";
+import AdminPage from "./pages/AdminPage"; // AdminPage import
 import BookingPage from "./pages/BookingPage";
 import Footer from "./components/Footer";
 
 const PrivateRoute = ({ children }) => {
   return localStorage.getItem("token") ? children : <Navigate to="/login" />;
+};
+
+const AdminRoute = ({ children }) => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  return user && user.isAdmin ? children : <Navigate to="/" />;
 };
 
 function App() {
@@ -40,6 +44,14 @@ function App() {
               <PrivateRoute>
                 <ProfilePage />
               </PrivateRoute>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <AdminRoute>
+                <AdminPage />
+              </AdminRoute>
             }
           />
         </Routes>
