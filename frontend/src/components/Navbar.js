@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from './AuthContext';
-import './Navbar.css';
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "./AuthContext";
+import "./Navbar.css";
 
 function Navbar() {
   const { isLoggedIn, logout } = useAuth();
@@ -9,13 +9,21 @@ function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [message, setMessage] = useState(null);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    if (storedUser) {
+      setUser(storedUser);
+    }
+  }, []);
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate("/login");
     setMenuOpen(false);
-    setMessage("You have successfully logged out."); // Log out message
-    setTimeout(() => setMessage(null), 3000); // Remove message after 3 seconds
+    setMessage("You have successfully logged out.");
+    setTimeout(() => setMessage(null), 3000);
   };
 
   const toggleMenu = () => {
@@ -28,19 +36,22 @@ function Navbar() {
 
   const handleDropdownLinkClick = () => {
     setDropdownOpen(false);
-    setMenuOpen(false); // Close both dropdown and menu after selection
+    setMenuOpen(false);
   };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (!event.target.closest('.services-dropdown') && !event.target.closest('.navbar-links')) {
+      if (
+        !event.target.closest(".services-dropdown") &&
+        !event.target.closest(".navbar-links")
+      ) {
         setDropdownOpen(false);
         setMenuOpen(false);
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -50,15 +61,21 @@ function Navbar() {
         <div className="navbar-logo">
           <Link to="/">Clean Master</Link>
         </div>
-        <ul className={`navbar-links ${menuOpen ? 'show' : ''}`}>
+        <ul className={`navbar-links ${menuOpen ? "show" : ""}`}>
           <li>
-            <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
+            <Link to="/" onClick={() => setMenuOpen(false)}>
+              Home
+            </Link>
           </li>
           <li>
-            <Link to="/contact" onClick={() => setMenuOpen(false)}>Contact</Link>
+            <Link to="/contact" onClick={() => setMenuOpen(false)}>
+              Contact
+            </Link>
           </li>
           <li>
-            <Link to="/offers" onClick={() => setMenuOpen(false)}>Offers</Link>
+            <Link to="/offers" onClick={() => setMenuOpen(false)}>
+              Offers
+            </Link>
           </li>
           <li className="services-dropdown">
             <button onClick={toggleDropdown} className="dropdown-button">
@@ -66,35 +83,78 @@ function Navbar() {
             </button>
             {dropdownOpen && (
               <ul className="dropdown-menu">
-                <li><Link to="/services/residential" onClick={handleDropdownLinkClick}>Residential Cleaning</Link></li>
-                <li><Link to="/services/commercial" onClick={handleDropdownLinkClick}>Commercial Cleaning</Link></li>
-                <li><Link to="/services/window" onClick={handleDropdownLinkClick}>Window Cleaning</Link></li>
-                <li><Link to="/services/carpet" onClick={handleDropdownLinkClick}>Carpet Cleaning</Link></li>
-                <li><Link to="/services/post-construction" onClick={handleDropdownLinkClick}>Post-Construction Cleaning</Link></li>
+                <li>
+                  <Link
+                    to="/services/residential"
+                    onClick={handleDropdownLinkClick}
+                  >
+                    Residential Cleaning
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/services/commercial"
+                    onClick={handleDropdownLinkClick}
+                  >
+                    Commercial Cleaning
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/services/window" onClick={handleDropdownLinkClick}>
+                    Window Cleaning
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/services/carpet" onClick={handleDropdownLinkClick}>
+                    Carpet Cleaning
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/services/post-construction"
+                    onClick={handleDropdownLinkClick}
+                  >
+                    Post-Construction Cleaning
+                  </Link>
+                </li>
               </ul>
             )}
           </li>
           <li>
-            <Link to="/register" onClick={() => setMenuOpen(false)}>Register</Link>
+            <Link to="/register" onClick={() => setMenuOpen(false)}>
+              Register
+            </Link>
           </li>
           <Link to="/booking">Book Service</Link>
-
 
           {isLoggedIn ? (
             <>
               <li>
-                <Link to="/profile" onClick={() => setMenuOpen(false)}>Profile</Link>
+                <Link to="/profile" onClick={() => setMenuOpen(false)}>
+                  Profile
+                </Link>
               </li>
+              {user &&
+                user.isAdmin && ( // Kontrollera om användaren är admin
+                  <li>
+                    <Link to="/admin" onClick={() => setMenuOpen(false)}>
+                      Admin
+                    </Link>
+                  </li>
+                )}
               <li>
-                <button className="logout-button" onClick={handleLogout}>Logout</button>
+                <button className="logout-button" onClick={handleLogout}>
+                  Logout
+                </button>
               </li>
             </>
           ) : (
             <li>
-              <Link to="/login" onClick={() => setMenuOpen(false)}>Login</Link>
+              <Link to="/login" onClick={() => setMenuOpen(false)}>
+                Login
+              </Link>
             </li>
           )}
-          {/* Close Button */}
           <li className="close-button">
             <button onClick={() => setMenuOpen(false)}>✕</button>
           </li>
@@ -103,7 +163,7 @@ function Navbar() {
           ☰
         </button>
       </nav>
-      {message && <div className="message-box">{message}</div>} {/* Message box */}
+      {message && <div className="message-box">{message}</div>}
     </>
   );
 }
