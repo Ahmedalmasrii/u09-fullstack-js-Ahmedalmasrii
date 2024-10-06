@@ -29,6 +29,27 @@ const getAllBookings = async (req, res) => {
   }
 };
 
+// Uppdaterar status på bokning
+const updateBookingStatus = async (req, res) => {
+  try {
+    const booking = await Booking.findById(req.params.id);
+
+    if (!booking) {
+      return res.status(404).json({ message: "Bokning hittades inte" });
+    }
+
+    booking.status = req.body.status;  // Uppdaterar bokningens status
+    await booking.save();
+
+    res.json({ message: "Bokningsstatus uppdaterad", booking });
+  } catch (error) {
+    res.status(500).json({ message: "Kunde inte uppdatera bokningsstatus" });
+  }
+};
+
+
+
+
 // Hämtar användarens egna bokningar
 const getUserBookings = async (req, res) => {
   try {
@@ -39,4 +60,4 @@ const getUserBookings = async (req, res) => {
   }
 };
 
-module.exports = { createBooking, getAllBookings, getUserBookings };
+module.exports = { createBooking, getAllBookings, getUserBookings, updateBookingStatus };
