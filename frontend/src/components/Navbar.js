@@ -77,6 +77,8 @@ function Navbar() {
           <li>
             <Link to="/register" onClick={() => setMenuOpen(false)}>Register</Link>
           </li>
+          <Link to="/booking">Book Service</Link>
+
 
           {isLoggedIn ? (
             <>
