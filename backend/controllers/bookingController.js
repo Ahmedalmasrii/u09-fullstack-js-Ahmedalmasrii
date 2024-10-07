@@ -38,7 +38,7 @@ const updateBookingStatus = async (req, res) => {
       return res.status(404).json({ message: "Bokning hittades inte" });
     }
 
-    booking.status = req.body.status;  // Uppdaterar bokningens status
+    booking.status = req.body.status; // Uppdaterar bokningens status
     await booking.save();
 
     res.json({ message: "Bokningsstatus uppdaterad", booking });
@@ -47,8 +47,24 @@ const updateBookingStatus = async (req, res) => {
   }
 };
 
+const updateBookingMessage = async (req, res) => {
+  try {
+    const { message } = req.body;
+    const booking = await Booking.findById(req.params.id);
 
-
+    if (booking) {
+      booking.message = message;
+      booking.messageRead = false; // När ett nytt meddelande skickas, markera det som oläst
+      await booking.save();
+      res.json({ message: "Meddelande uppdaterat" });
+    } else {
+      res.status(404).json({ message: "Bokning hittades inte" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Kunde inte uppdatera meddelandet" });
+  }
+};
 
 // Hämtar användarens egna bokningar
 const getUserBookings = async (req, res) => {
@@ -60,4 +76,51 @@ const getUserBookings = async (req, res) => {
   }
 };
 
-module.exports = { createBooking, getAllBookings, getUserBookings, updateBookingStatus };
+const deleteBooking = async (req, res) => {
+  try {
+    const booking = await Booking.findById(req.params.id);
+
+    if (booking) {
+      await booking.deleteOne();
+      res.json({ message: "Bokning borttagen" });
+    } else {
+      res.status(404).json({ message: "Bokning hittades inte" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Kunde inte ta bort bokning" });
+  }
+};
+
+// Lägger till funktionen markMessageAsRead
+const markMessageAsRead = async (req, res) => {
+  try {
+    const booking = await Booking.findById(req.params.id);
+
+    if (booking) {
+      // Kontrollera att bokningen tillhör den inloggade användaren
+      if (booking.user.toString() !== req.user._id.toString()) {
+        return res.status(401).json({ message: "Inte auktoriserad" });
+      }
+
+      booking.messageRead = true;
+      await booking.save();
+      res.json({ message: "Meddelande markerat som läst" });
+    } else {
+      res.status(404).json({ message: "Bokning hittades inte" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Kunde inte markera meddelandet som läst" });
+  }
+};
+
+module.exports = {
+  createBooking,
+  getAllBookings,
+  getUserBookings,
+  updateBookingStatus,
+  deleteBooking,
+  updateBookingMessage,
+  markMessageAsRead, // Se till att denna funktion exporteras
+};
