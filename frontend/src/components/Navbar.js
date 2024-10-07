@@ -1,28 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 import "./Navbar.css";
 
 function Navbar() {
-  const { isLoggedIn, logout } = useAuth();
+  const { isLoggedIn, user, logout } = useAuth();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [message, setMessage] = useState(null);
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    if (storedUser) {
-      setUser(storedUser);
-    }
-  }, []);
 
   const handleLogout = () => {
     logout();
     navigate("/login");
     setMenuOpen(false);
-    setMessage("You have successfully logged out.");
+    setMessage("Du har loggats ut.");
     setTimeout(() => setMessage(null), 3000);
   };
 
@@ -38,22 +30,6 @@ function Navbar() {
     setDropdownOpen(false);
     setMenuOpen(false);
   };
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        !event.target.closest(".services-dropdown") &&
-        !event.target.closest(".navbar-links")
-      ) {
-        setDropdownOpen(false);
-        setMenuOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
 
   return (
     <>
@@ -125,7 +101,11 @@ function Navbar() {
               Register
             </Link>
           </li>
-          <Link to="/booking">Book Service</Link>
+          <li>
+            <Link to="/booking" onClick={() => setMenuOpen(false)}>
+              Book Service
+            </Link>
+          </li>
 
           {isLoggedIn ? (
             <>
@@ -134,14 +114,13 @@ function Navbar() {
                   Profile
                 </Link>
               </li>
-              {user &&
-                user.isAdmin && ( // Kontrollera om användaren är admin
-                  <li>
-                    <Link to="/admin" onClick={() => setMenuOpen(false)}>
-                      Admin
-                    </Link>
-                  </li>
-                )}
+              {user && user.isAdmin && (
+                <li>
+                  <Link to="/admin" onClick={() => setMenuOpen(false)}>
+                    Admin
+                  </Link>
+                </li>
+              )}
               <li>
                 <button className="logout-button" onClick={handleLogout}>
                   Logout
