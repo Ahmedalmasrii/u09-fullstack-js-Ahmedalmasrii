@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./ProfilePage.css";
+import { useAuth } from "../components/AuthContext";
 
 const ProfilePage = () => {
+  const { user: authUser } = useAuth();
   const [user, setUser] = useState(null);
-  const [bookings, setBookings] = useState([]); // Hanterar bokningar
+  const [bookings, setBookings] = useState([]);
   const [editName, setEditName] = useState("");
   const [editPassword, setEditPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
   const [profileImage, setProfileImage] = useState(null);
+  const [bookingsWithUnreadMessages, setBookingsWithUnreadMessages] = useState(
+    []
+  );
+  const [allMessages, setAllMessages] = useState([]);
 
   const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5001";
 
@@ -29,7 +35,7 @@ const ProfilePage = () => {
         );
         setUser(userData);
         setEditName(userData.name);
-        setProfileImage(userData.profileImage); // Hämtar användarens profilbild
+        setProfileImage(userData.profileImage);
       } catch (err) {
         setMessage(
           `Fel vid hämtning av data: ${
@@ -52,7 +58,17 @@ const ProfilePage = () => {
           `${API_URL}/api/bookings/mybookings`,
           config
         );
-        setBookings(bookingsData); // Sparar användarens bokningar
+        setBookings(bookingsData);
+
+        // Hittar bokningar med olästa meddelanden
+        const unreadMessages = bookingsData.filter(
+          (booking) => booking.message && !booking.messageRead
+        );
+        setBookingsWithUnreadMessages(unreadMessages);
+
+        // Hämta alla meddelanden
+        const messages = bookingsData.filter((booking) => booking.message);
+        setAllMessages(messages);
       } catch (err) {
         setMessage(
           `Fel vid hämtning av bokningar: ${
@@ -144,7 +160,7 @@ const ProfilePage = () => {
         formData,
         config
       );
-      setProfileImage(data.imageUrl); // Uppdaterar profilbildens URL
+      setProfileImage(data.imageUrl);
       setMessage("Profilbild uppdaterad!");
     } catch (err) {
       setMessage(
@@ -152,6 +168,39 @@ const ProfilePage = () => {
           err.response?.data?.message || err.message
         }`
       );
+    }
+  };
+
+  // Markera meddelande som läst
+  const markMessageAsRead = async (bookingId) => {
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    try {
+      await axios.put(
+        `${API_URL}/api/bookings/${bookingId}/markAsRead`,
+        {},
+        config
+      );
+      // Uppdatera state
+      setBookingsWithUnreadMessages(
+        bookingsWithUnreadMessages.filter(
+          (booking) => booking._id !== bookingId
+        )
+      );
+      setAllMessages(
+        allMessages.map((booking) =>
+          booking._id === bookingId
+            ? { ...booking, messageRead: true }
+            : booking
+        )
+      );
+    } catch (err) {
+      console.error("Kunde inte markera meddelande som läst:", err);
     }
   };
 
@@ -201,7 +250,57 @@ const ProfilePage = () => {
         </div>
       </div>
 
-      {/* Bokningssektion där man kan se sina bokningar  */}
+      {/* Visa notis om nya meddelanden */}
+      {bookingsWithUnreadMessages.length > 0 && (
+        <div className="notification">
+          <h2>Du har nya meddelanden!</h2>
+          {bookingsWithUnreadMessages.map((booking) => (
+            <div key={booking._id} className="message">
+              <p>
+                <strong>Från admin:</strong> {booking.message}
+              </p>
+              <button
+                className="lastknapp"
+                onClick={() => markMessageAsRead(booking._id)}
+              >
+                Markera som läst
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Sektion för alla meddelanden */}
+      <div className="messages-section">
+        <h2>Meddelanden</h2>
+        {allMessages.length > 0 ? (
+          allMessages.map((booking) => (
+            <div
+              key={booking._id}
+              className={`message ${booking.messageRead ? "read" : "unread"}`}
+            >
+              <p>
+                <strong>Bokning:</strong> {booking.service}
+              </p>
+              <p>
+                <strong>Meddelande:</strong> {booking.message}
+              </p>
+              {!booking.messageRead && (
+                <button
+                  className="lastknapp"
+                  onClick={() => markMessageAsRead(booking._id)}
+                >
+                  Markera som läst
+                </button>
+              )}
+            </div>
+          ))
+        ) : (
+          <p>Inga meddelanden.</p>
+        )}
+      </div>
+
+      {/* Bokningssektion */}
       <div className="bookings-section">
         <h2>Mina bokningar</h2>
         {bookings.length > 0 ? (
