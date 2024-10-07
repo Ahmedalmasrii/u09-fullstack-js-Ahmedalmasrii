@@ -60,7 +60,7 @@ const loginUser = async (req, res) => {
         isAdmin: user.isAdmin,
         profileImage: user.profileImage
           ? `/uploads/${user.profileImage}`
-          : null, // Returnerar korrekt profilbild
+          : null,
         token,
       });
     } else {
@@ -84,15 +84,19 @@ const getAllUsers = async (req, res) => {
 // Tar bort användare (endast för admin)
 const deleteUser = async (req, res) => {
   try {
+    if (req.params.id === req.user._id.toString()) {
+      return res.status(400).json({ message: "Du kan inte ta bort dig själv" });
+    }
     const user = await User.findById(req.params.id);
 
     if (user) {
-      await user.remove();
+      await user.deleteOne();
       res.json({ message: "Användare borttagen" });
     } else {
       res.status(404).json({ message: "Användare hittades inte" });
     }
   } catch (error) {
+    console.error(error); // Lägg till denna rad för att logga felet
     res.status(500).json({ message: "Kunde inte ta bort användare" });
   }
 };
