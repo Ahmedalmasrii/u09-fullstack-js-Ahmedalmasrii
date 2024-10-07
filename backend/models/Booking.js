@@ -10,6 +10,8 @@ const bookingSchema = new mongoose.Schema(
     phone: { type: String, required: true },
     status: { type: String, default: "Mottagen" }, // Standardstatus för bokningar
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    message: { type: String, default: '' }, 
+    messageRead: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
