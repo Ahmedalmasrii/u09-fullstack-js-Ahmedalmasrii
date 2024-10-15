@@ -89,14 +89,17 @@ import PrivateRoute from "./components/PrivateRoute"; // Skapa en PrivateRoute-k
 
 // Registrerar Service Worker
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js').then((registration) => {
-      console.log('Service Worker registrerad med scope:', registration.scope);
-    }).catch((error) => {
-      console.error('Service Worker-registrering misslyckades:', error);
+  if (process.env.NODE_ENV === 'production') {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/service-worker.js').then((registration) => {
+        console.log('Service Worker registrerad med scope:', registration.scope);
+      }).catch((error) => {
+        console.error('Service Worker-registrering misslyckades:', error);
+      });
     });
-  });
+  }
 }
+
 
 function App() {
   return (
