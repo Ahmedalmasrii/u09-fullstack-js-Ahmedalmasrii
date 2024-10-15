@@ -8,9 +8,10 @@ const bookingSchema = new mongoose.Schema(
     name: { type: String, required: true },
     email: { type: String, required: true },
     phone: { type: String, required: true },
-    status: { type: String, default: "Mottagen" }, // Standardstatus för bokningar
+    status: { type: String, default: "Received" },
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    message: { type: String, default: '' }, 
+    discountCode: { type: String }, // rabattkoden här
+    message: { type: String, default: '' },
     messageRead: { type: Boolean, default: false },
   },
   { timestamps: true }
