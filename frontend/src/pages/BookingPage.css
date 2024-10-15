@@ -1,56 +1,88 @@
-
 .booking-container {
-    max-width: 600px;
-    margin: 50px auto;
-    padding: 20px;
-    background: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    text-align: center;
-  }
-  
-  .booking-container h1 {
-    font-size: 26px;
-    margin-bottom: 20px;
-  }
-  
-  .form-group {
-    margin-bottom: 20px;
-  }
-  
-  input.form-control,
-  .react-calendar {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 16px;
-  }
-  
-  .react-calendar {
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-  
-  button.btn {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  button.btn:hover {
-    background-color: #0056b3;
-  }
-  
-  .success-message {
-    margin-top: 20px;
-    color: green;
-    font-size: 16px;
-  }
-  
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.booking-container h1 {
+  font-size: 26px;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+input.form-control,
+.react-calendar {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.react-calendar {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+button.btn {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button.btn:hover {
+  background-color: #0056b3;
+}
+
+.success-message {
+  margin-top: 20px;
+  color: green;
+  font-size: 16px;
+}
+
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.popup-content {
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.popup-content h2 {
+  margin-bottom: 20px;
+}
+
+.popup-content p {
+  margin-bottom: 20px;
+}
+
+.popup-content .btn {
+  padding: 10px 20px;
+}
