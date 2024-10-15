@@ -1,8 +1,27 @@
 const Booking = require("../models/Booking");
 
 // Skapar en ny bokning
+// const createBooking = async (req, res) => {
+//   const { service, date, time, name, email, phone } = req.body;
+//   try {
+//     const booking = await Booking.create({
+//       service,
+//       date,
+//       time,
+//       name,
+//       email,
+//       phone,
+//       user: req.user._id, // Lägger till användar-ID från inloggningen
+//     });
+//     res.status(201).json(booking);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };
+
+
 const createBooking = async (req, res) => {
-  const { service, date, time, name, email, phone } = req.body;
+  const { service, date, time, name, email, phone, discountCode } = req.body; // Lägg till rabattkoden här
   try {
     const booking = await Booking.create({
       service,
@@ -11,13 +30,15 @@ const createBooking = async (req, res) => {
       name,
       email,
       phone,
-      user: req.user._id, // Lägger till användar-ID från inloggningen
+      discountCode, // Spara rabattkoden
+      user: req.user._id,
     });
     res.status(201).json(booking);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 // Hämtar alla bokningar för admin
 const getAllBookings = async (req, res) => {
