@@ -1,7 +1,7 @@
 {
   "name": "Clean Master",
   "short_name": "CleanMaster",
-  "description": "Städ i toppklass",
+  "description": "Your trusted partner for all your cleaning needs",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
