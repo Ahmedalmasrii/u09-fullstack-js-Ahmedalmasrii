@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "start": "concurrently \"npm run dev\" \"npm start --prefix ../frontend\"",
-    "dev": "nodemon server.js"
+    "start": "concurrently \"npm run dev\" \"npm run start-frontend\"",
+    "dev": "nodemon server.js",
+    "start-frontend": "npm start --prefix ../frontend"
   },
   "keywords": [],
   "author": "",
