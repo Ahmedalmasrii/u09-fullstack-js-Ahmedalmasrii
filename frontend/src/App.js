@@ -111,7 +111,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/offers" element={<OffersPage />} />
-            <Route path="/services" element={<ServicesPage />} />
+            <Route path="/services/:serviceId" element={<ServicesPage />} /> {/* Dynamisk route */}
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/booking" element={<BookingPage />} />
