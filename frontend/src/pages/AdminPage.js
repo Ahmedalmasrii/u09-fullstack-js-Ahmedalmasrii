@@ -6,13 +6,14 @@ import { Container, Table, Button, Form, Alert } from "react-bootstrap";
 const AdminPage = () => {
   const [users, setUsers] = useState([]);
   const [bookings, setBookings] = useState([]);
+  const [contactMessages, setContactMessages] = useState([]);
   const [message, setMessage] = useState("");
   const [messageContent, setMessageContent] = useState({});
   const API_URL = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
-    // Hämta användare
-    const fetchUsers = async () => {
+    
+    const fetchData = async () => {
       const token = localStorage.getItem("token");
       const config = {
         headers: {
@@ -20,6 +21,7 @@ const AdminPage = () => {
         },
       };
 
+      // Hämta användare
       try {
         const { data: usersData } = await axios.get(
           `${API_URL}/api/users`,
@@ -33,17 +35,8 @@ const AdminPage = () => {
           }`
         );
       }
-    };
 
-    // Hämta bokningar
-    const fetchBookings = async () => {
-      const token = localStorage.getItem("token");
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-
+      // Hämta bokningar
       try {
         const { data: bookingsData } = await axios.get(
           `${API_URL}/api/bookings`,
@@ -57,10 +50,24 @@ const AdminPage = () => {
           }`
         );
       }
+
+      // Hämta kontaktmeddelanden
+      try {
+        const { data: contactData } = await axios.get(
+          `${API_URL}/api/contact`,
+          config
+        );
+        setContactMessages(contactData);
+      } catch (err) {
+        setMessage(
+          `Fel vid hämtning av kontaktmeddelanden: ${
+            err.response?.data?.message || err.message
+          }`
+        );
+      }
     };
 
-    fetchUsers();
-    fetchBookings();
+    fetchData();
   }, [API_URL]);
 
   // Ta bort en användare
@@ -148,7 +155,7 @@ const AdminPage = () => {
     }
   };
 
-  // Funktion för att ta bort en bokning
+  // Ta bort en bokning
   const handleDeleteBooking = async (bookingId) => {
     const token = localStorage.getItem("token");
     const config = {
@@ -181,6 +188,7 @@ const AdminPage = () => {
         </Alert>
       )}
 
+      {/* Användarhantering */}
       <div className="admin-section mb-5">
         <h2>Användarhantering</h2>
         {users.length > 0 ? (
@@ -216,7 +224,8 @@ const AdminPage = () => {
         )}
       </div>
 
-      <div className="admin-section">
+      {/* Bokningshantering */}
+      <div className="admin-section mb-5">
         <h2>Bokningshantering</h2>
         {bookings.length > 0 ? (
           <Table striped bordered hover responsive className="admin-table">
@@ -285,6 +294,37 @@ const AdminPage = () => {
           </Table>
         ) : (
           <p>Inga bokningar hittades.</p>
+        )}
+      </div>
+
+      {/* Kontaktmeddelanden */}
+      <div className="admin-section">
+        <h2>Kontaktmeddelanden</h2>
+        {contactMessages.length > 0 ? (
+          <Table striped bordered hover responsive className="admin-table">
+            <thead>
+              <tr>
+                <th>Namn</th>
+                <th>E-post</th>
+                <th>Ämne</th>
+                <th>Meddelande</th>
+                <th>Datum</th>
+              </tr>
+            </thead>
+            <tbody>
+              {contactMessages.map((msg) => (
+                <tr key={msg._id}>
+                  <td>{msg.name}</td>
+                  <td>{msg.email}</td>
+                  <td>{msg.subject}</td>
+                  <td>{msg.message}</td>
+                  <td>{new Date(msg.createdAt).toLocaleString()}</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        ) : (
+          <p>Inga kontaktmeddelanden hittades.</p>
         )}
       </div>
     </Container>
