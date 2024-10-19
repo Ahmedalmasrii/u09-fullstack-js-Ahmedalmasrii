@@ -1,8 +1,15 @@
 import React from "react";
 import "./homePage.css";
 import "../components/Navbar.css";
+import { useNavigate } from "react-router-dom";
 
 function HomePage() {
+  const navigate = useNavigate(); // För att navigera mellan sidor
+
+  const handleBookNowClick = () => {
+    navigate("/booking"); // Omdirigerar användaren till bokningssidan
+  };
+
   return (
     <div className="homepage">
       <header className="header">
@@ -15,7 +22,9 @@ function HomePage() {
         <div className="header-content">
           <h1>Welcome to Clean Master</h1>
           <p>Your trusted partner for all your cleaning needs</p>
-          <button className="cta-button">Book now</button>
+          <button className="cta-button" onClick={handleBookNowClick}>
+            Book now
+          </button>
         </div>
       </header>
       <main className="main-content">
