@@ -12,13 +12,13 @@ function LoginPage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
   const { login } = useAuth();
+  const API_URL = process.env.REACT_APP_API_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/users/login`,
+      const response = await axios.post(`${API_URL}/api/users/login`,
         {
           email,
           password,

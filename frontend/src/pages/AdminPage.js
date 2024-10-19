@@ -8,7 +8,7 @@ const AdminPage = () => {
   const [bookings, setBookings] = useState([]);
   const [message, setMessage] = useState("");
   const [messageContent, setMessageContent] = useState({});
-  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5001";
+  const API_URL = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
     // Hämta användare

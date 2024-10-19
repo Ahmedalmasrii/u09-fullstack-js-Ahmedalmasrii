@@ -94,7 +94,7 @@ function RegisterPage() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(''); // Ny state för framgångsmeddelande
   const navigate = useNavigate();
-
+  const API_URL = process.env.REACT_APP_API_URL;
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(''); // Rensa eventuella tidigare felmeddelanden

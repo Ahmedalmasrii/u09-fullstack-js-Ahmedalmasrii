@@ -15,7 +15,7 @@ const BookingPage = () => {
   const [showPopup, setShowPopup] = useState(false); // Hanterar popup-öppning
   const [discountCode, setDiscountCode] = useState("");
 
-  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5001";
+  const API_URL = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
     const storedDiscountCode = localStorage.getItem("discountCode");
