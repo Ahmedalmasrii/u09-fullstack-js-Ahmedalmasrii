@@ -24,6 +24,9 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 const userRoutes = require("./routes/userRoutes");
 
 // Routes
+const contactRoutes = require('./routes/contactRoutes');
+app.use('/api/contact', contactRoutes);
+
 app.use("/api/users", userRoutes);
 
 const bookingRoutes = require("./routes/bookingRoutes");
