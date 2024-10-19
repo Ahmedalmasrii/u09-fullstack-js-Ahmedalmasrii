@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 import HomePage from "./pages/homePage";
 import ContactPage from "./pages/contactPage";
-import OffersPage from "./pages/OffersPage";
+import OffersPage from "./pages/offerspage";
 import ServicesPage from "./pages/ServicesPage";
 import Navbar from "./components/Navbar";
 import LoginPage from "./pages/LoginPage";
