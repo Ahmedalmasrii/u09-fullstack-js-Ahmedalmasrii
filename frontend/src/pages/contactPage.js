@@ -110,7 +110,7 @@ function ContactPage() {
             </p>
             <button
               onClick={handleClosePopup}
-              className="close-button"
+              className="close-buttoncontact"
               id="close-button"
             >
               Stäng

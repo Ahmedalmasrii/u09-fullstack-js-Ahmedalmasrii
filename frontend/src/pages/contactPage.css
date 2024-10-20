@@ -112,16 +112,16 @@
   margin-bottom: 20px;
 }
 
-.close-button {
+.close-buttoncontact {
   padding: 10px 20px;
-  background-color: red !important; 
+  background-color: red !important;
   color: #fff;
   border: none;
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
-  display: block !important; 
-  visibility: visible !important; 
+  display: block !important;
+  visibility: visible !important;
 }
 
 .close-button:hover {
