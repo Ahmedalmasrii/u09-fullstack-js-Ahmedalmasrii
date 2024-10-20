@@ -10,10 +10,13 @@ const ResetPasswordPage = () => {
   const API_URL = process.env.REACT_APP_API_URL;
   const navigate = useNavigate();
 
+  // Hämtar token från localStorage när komponenten laddas
+  const token = localStorage.getItem("token");
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("token");  // Hämtar token från localStorage
 
+    // Kontrollera om token finns
     if (!token) {
       setError("Unauthorized. No token available.");
       return;
@@ -26,7 +29,7 @@ const ResetPasswordPage = () => {
 
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`,  // Skickar JWT token
+        Authorization: `Bearer ${token}`, // Skickar JWT token
         "Content-Type": "application/json",
       },
     };
@@ -39,20 +42,13 @@ const ResetPasswordPage = () => {
       );
       setMessage("Password updated successfully");
       setError("");
-      setTimeout(() => navigate("/profile"), 2000);  // Omdirigerar till profil efter lösenordsändring
+      setTimeout(() => navigate("/profile"), 2000); // Omdirigerar till profil efter lösenordsändring
     } catch (error) {
-      if (error.response?.status === 401) {
-        setError("Unauthorized. Please log in again.");
-        // Du kan också omdirigera användaren till login-sidan om token är ogiltig
-        setTimeout(() => navigate("/login"), 2000);
-      } else {
-        setError(`Error updating password: ${error.response?.status || error.message}`);
-      }
+      setError(
+        `Error updating password: ${error.response?.status || error.message}`
+      );
     }
   };
-
-  console.log("Token in localStorage:", token);
-
 
   return (
     <div className="reset-password-container">
