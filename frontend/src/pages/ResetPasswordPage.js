@@ -51,6 +51,9 @@ const ResetPasswordPage = () => {
     }
   };
 
+  console.log("Token in localStorage:", token);
+
+
   return (
     <div className="reset-password-container">
       <h1>Reset Your Password</h1>

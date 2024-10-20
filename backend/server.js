@@ -53,3 +53,10 @@ const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+
+app.use((req, res, next) => {
+  console.log("Request URL:", req.originalUrl);
+  console.log("Request Headers:", req.headers);
+  next();
+});
