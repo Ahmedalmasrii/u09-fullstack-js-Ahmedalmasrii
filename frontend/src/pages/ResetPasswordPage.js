@@ -41,7 +41,13 @@ const ResetPasswordPage = () => {
       setError("");
       setTimeout(() => navigate("/profile"), 2000);  // Omdirigerar till profil efter lösenordsändring
     } catch (error) {
-      setError(`Error updating password: ${error.response?.status || error.message}`);
+      if (error.response?.status === 401) {
+        setError("Unauthorized. Please log in again.");
+        // Du kan också omdirigera användaren till login-sidan om token är ogiltig
+        setTimeout(() => navigate("/login"), 2000);
+      } else {
+        setError(`Error updating password: ${error.response?.status || error.message}`);
+      }
     }
   };
 
