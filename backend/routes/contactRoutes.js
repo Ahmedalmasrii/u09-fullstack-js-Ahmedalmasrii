@@ -1,5 +1,5 @@
 // routes/contactRoutes.js
-const { protect, admin } = require('../middleware/authMiddleware');
+
 const express = require('express');
 const router = express.Router();
 const asyncHandler = require('express-async-handler');
@@ -10,7 +10,7 @@ const ContactMessage = require('../models/contactModel');
 // Importera middleware för autentisering och admin-kontroll
 const { protect, admin } = require('../middleware/authMiddleware');
 
-
+// POST-route för att skicka kontaktmeddelande
 router.post(
   '/',
   asyncHandler(async (req, res) => {
@@ -29,11 +29,11 @@ router.post(
   })
 );
 
-
+// GET-route för att hämta alla kontaktmeddelanden (Endast för admin)
 router.get(
   '/',
-  protect, // Middleware för autentisering
-  admin,   // Middleware för att kontrollera om användaren är admin
+  protect,
+  admin,
   asyncHandler(async (req, res) => {
     const messages = await ContactMessage.find().sort({ createdAt: -1 });
     res.json(messages);
