@@ -9,16 +9,17 @@
   padding: 0;
   text-align: center;
   overflow: hidden;
-  max-height: 400px;
+  max-height: 500px;
 }
 
-.header img {
+.header-image {
   width: 100%;
   height: auto;
-  max-height: 400px;
+  max-height: 500px;
   object-fit: cover;
   display: block;
   margin: 0 auto;
+  filter: brightness(70%);
 }
 
 .header-content {
@@ -26,104 +27,403 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 20px;
-  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 30px;
+  border-radius: 10px;
   width: 90%;
-  max-width: 600px;
+  max-width: 700px;
 }
 
 .header h1 {
-  font-size: 36px;
+  font-size: 48px;
   margin-bottom: 15px;
 }
 
 .header p {
-  font-size: 18px;
-  margin-bottom: 20px;
+  font-size: 20px;
+  margin-bottom: 25px;
 }
 
 .cta-button {
-  padding: 10px 20px;
+  padding: 12px 30px;
   font-size: 18px;
   color: #fff;
-  background-color: #ffdd57;
+  background-color: #28a745;
+  /* Grön färg */
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .cta-button:hover {
-  background-color: #e6c044;
+  background-color: #218838;
+  transform: scale(1.05);
 }
 
 .main-content {
-  padding: 30px 15px;
+  padding: 40px 20px;
+  background-color: #f9f9f9;
 }
 
+/* About Us Section */
 .about-us {
-  max-width: 800px;
-  margin: 0 auto;
+  max-width: 900px;
+  margin: 0 auto 60px auto;
   text-align: center;
-  margin-bottom: 50px;
 }
 
+.about-us h2 {
+  font-size: 32px;
+  margin-bottom: 20px;
+  color: #28a745;
+}
+
+.about-us p {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #555;
+}
+
+/* Services Section */
 .services {
-  max-width: 1000px;
-  margin: 0 auto;
+  max-width: 1100px;
+  margin: 0 auto 60px auto;
 }
 
 .services h2 {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
+  font-size: 32px;
+  color: #28a745;
 }
 
 .service-list {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   flex-wrap: wrap;
+  gap: 20px;
 }
 
 .service-item {
-  flex: 1 1 100%;
+  flex: 1 1 300px;
   padding: 20px;
-  margin: 10px 0;
-  background-color: #f4f4f4;
+  background-color: #fff;
   border-radius: 10px;
   text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-item:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+}
+
+.service-icon {
+  font-size: 40px;
+  color: #28a745;
+  margin-bottom: 15px;
 }
 
 .service-item h3 {
   margin-bottom: 10px;
-  font-size: 18px;
+  font-size: 24px;
+  color: #333;
 }
 
 .service-item p {
-  font-size: 14px;
+  font-size: 16px;
   color: #666;
 }
 
-/* Media queries för responsiv design */
+/* Testimonials Section */
+.testimonials {
+  max-width: 900px;
+  margin: 0 auto 60px auto;
+  text-align: center;
+}
+
+.testimonials h2 {
+  font-size: 32px;
+  margin-bottom: 30px;
+  color: #28a745;
+}
+
+.testimonial-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.testimonial-item {
+  background-color: #fff;
+  padding: 20px 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.testimonial-item p {
+  font-size: 16px;
+  color: #555;
+  font-style: italic;
+}
+
+.testimonial-item h4 {
+  margin-top: 15px;
+  font-size: 18px;
+  color: #28a745;
+}
+
+/* Gallery Section */
+.gallery {
+  max-width: 1200px;
+  margin: 0 auto 60px auto;
+  text-align: center;
+}
+
+.gallery h2 {
+  font-size: 32px;
+  margin-bottom: 30px;
+  color: #28a745;
+}
+
+.gallery-container {
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 10px 0;
+  position: relative;
+}
+
+.gallery-list {
+  display: inline-flex;
+  gap: 15px;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.gallery-image {
+  width: 300px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.gallery-image:hover {
+  transform: scale(1.05);
+}
+
+
+
+
+
+.team {
+  max-width: 1100px;
+  margin: 0 auto 60px auto;
+  text-align: center;
+}
+
+.team h2 {
+  font-size: 32px;
+  margin-bottom: 30px;
+  color: #28a745;
+}
+
+.team-list {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.team-member {
+  flex: 1 1 300px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.team-member:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+}
+
+.team-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 15px;
+}
+
+.team-member h4 {
+  font-size: 20px;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.team-member p {
+  font-size: 16px;
+  color: #666;
+}
+
+/* FAQ Section */
+.faq {
+  max-width: 900px;
+  margin: 0 auto 60px auto;
+  text-align: center;
+}
+
+.faq h2 {
+  font-size: 32px;
+  margin-bottom: 30px;
+  color: #28a745;
+}
+
+.faq-list {
+  text-align: left;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.faq-item {
+  margin-bottom: 20px;
+}
+
+.faq-item h4 {
+  font-size: 20px;
+  color: #333;
+  cursor: pointer;
+  position: relative;
+  padding-right: 25px;
+  transition: color 0.3s ease;
+}
+
+.faq-item h4::after {
+  content: '+';
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 20px;
+  transition: transform 0.3s ease;
+}
+
+.faq-item.active h4::after {
+  transform: rotate(45deg);
+}
+
+.faq-item p {
+  font-size: 16px;
+  color: #666;
+  display: none;
+  margin-top: 10px;
+}
+
+.faq-item.active p {
+  display: block;
+}
+
+/* Contact Us Section */
+.contact-us {
+  max-width: 900px;
+  margin: 0 auto 60px auto;
+  text-align: center;
+}
+
+.contact-us h2 {
+  font-size: 32px;
+  margin-bottom: 30px;
+  color: #28a745;
+}
+
+.contact-info {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.contact-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.contact-icon {
+  font-size: 30px;
+  color: #28a745;
+  margin-bottom: 10px;
+}
+
+.contact-item h4 {
+  font-size: 20px;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.contact-item p {
+  font-size: 16px;
+  color: #666;
+}
+
+/* Footer Section */
+footer {
+  background-color: #333;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+}
+
+footer p {
+  margin: 0;
+  font-size: 16px;
+}
+
+/* Media Queries för Responsiv Design */
 @media (min-width: 768px) {
-  .service-item {
+  .gallery-image {
+    width: 200px;
+    height: 150px;
+  }
+
+  .service-list {
+    gap: 30px;
+  }
+
+  .testimonial-list {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .testimonial-item {
     flex: 1 1 30%;
-    margin: 10px;
   }
 
-  .header h1 {
-    font-size: 48px;
+  .gallery-image {
+    height: 250px;
   }
 
-  .header p {
-    font-size: 20px;
+  .team-list {
+    gap: 40px;
   }
 
-  .cta-button {
-    font-size: 18px;
+  .contact-info {
+    gap: 40px;
   }
+}
 
-  .header-content {
-    width: auto;
-  }
+/* Animation for FAQ toggle */
+.faq-item h4 {
+  transition: color 0.3s ease;
+}
+
+.faq-item.active h4 {
+  color: #28a745;
 }
