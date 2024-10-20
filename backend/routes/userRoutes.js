@@ -13,14 +13,16 @@ const {
 const { protect, admin } = require("../middlewares/authMiddleware");
 const multer = require("multer");
 const path = require("path");
+const sanitize = require('sanitize-filename');
 
 // Multer-konfiguration för filuppladdning
 const storage = multer.diskStorage({
   destination(req, file, cb) {
-    cb(null, "uploads/"); // Sparar filerna i 'uploads/' mappen
+    cb(null, path.join(__dirname, '..', 'uploads')); // Använd absolut sökväg
   },
   filename(req, file, cb) {
-    cb(null, `${Date.now()}_${file.originalname}`); // Sätter ett unikt filnamn med tidsstämpel
+    const sanitizedFilename = sanitize(`${Date.now()}_${file.originalname}`);
+    cb(null, sanitizedFilename); // Sätter ett unikt och sanitiserat filnamn
   },
 });
 
@@ -31,7 +33,7 @@ const fileFilter = (req, file, cb) => {
   const mimetype = filetypes.test(file.mimetype);
 
   if (mimetype && extname) {
-    cb(null, true);
+    return cb(null, true);
   } else {
     cb(new Error("Error: Endast bilder (jpeg, jpg, png, gif) är tillåtna"));
   }
@@ -40,7 +42,7 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({
   storage,
   fileFilter,
-  limits: { fileSize: 1024 * 1024 }, // Begränsar filstorleken till 1MB
+  limits: { fileSize: 5 * 1024 * 1024 }, // Öka till 5MB
 });
 
 // Felhantering för Multer (större filer än tillåtet etc.)
@@ -49,7 +51,7 @@ router.use((err, req, res, next) => {
     if (err.code === "LIMIT_FILE_SIZE") {
       return res
         .status(400)
-        .json({ message: "Filen är för stor. Max 1MB tillåtet." });
+        .json({ message: "Filen är för stor. Max 5MB tillåtet." });
     }
   } else if (err) {
     return res.status(400).json({ message: err.message });
