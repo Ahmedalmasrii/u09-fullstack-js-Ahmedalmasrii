@@ -16,7 +16,7 @@ import ProfilePage from "./pages/ProfilePage";
 import AdminPage from "./pages/AdminPage";
 import BookingPage from "./pages/BookingPage";
 import Footer from "./components/Footer";
-import ResetPasswordPage from "./pages/ResetPasswordPage"; // Importera ResetPasswordPage
+
 import AdminRoute from "./components/AdminRoutes";
 
 import { AuthProvider } from "./components/AuthContext"; // Importera AuthProvider
@@ -49,10 +49,8 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route
-              path="/reset-password"
-              element={<ResetPasswordPage />}
-            />{" "}
+          
+          {" "}
             {/* Ny route */}
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/offers" element={<OffersPage />} />
