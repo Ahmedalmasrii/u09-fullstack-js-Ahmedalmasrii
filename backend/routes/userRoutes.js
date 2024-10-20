@@ -9,16 +9,17 @@ const {
   updateUserName,
   updatePassword,
   updateProfileImage,
+  unlockUserAccount, // Import för att låsa upp användare
 } = require("../controllers/userController");
 const { protect, admin } = require("../middlewares/authMiddleware");
 const multer = require("multer");
 const path = require("path");
-const sanitize = require('sanitize-filename');
+const sanitize = require("sanitize-filename");
 
 // Multer-konfiguration för filuppladdning
 const storage = multer.diskStorage({
   destination(req, file, cb) {
-    cb(null, path.join(__dirname, '..', 'uploads')); // Använd absolut sökväg
+    cb(null, path.join(__dirname, "..", "uploads")); // Använd absolut sökväg
   },
   filename(req, file, cb) {
     const sanitizedFilename = sanitize(`${Date.now()}_${file.originalname}`);
@@ -42,7 +43,7 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({
   storage,
   fileFilter,
-  limits: { fileSize: 5 * 1024 * 1024 }, // Öka till 5MB
+  limits: { fileSize: 5 * 1024 * 1024 }, // Max 5MB
 });
 
 // Felhantering för Multer (större filer än tillåtet etc.)
@@ -75,7 +76,7 @@ router.get("/profile", protect, getUserProfile);
 // Uppdatera användarnamn
 router.put("/profile/name", protect, updateUserName);
 
-// Uppdatera lösenord
+// Uppdatera lösenord (även för temporära lösenord)
 router.put("/profile/password", protect, updatePassword);
 
 // Ladda upp profilbild
@@ -87,8 +88,6 @@ router.put(
 );
 
 // Admin låser upp konto
-const { unlockUserAccount } = require("../controllers/userController"); // Se till att denna är importerad
 router.put("/:id/unlock", protect, admin, unlockUserAccount);
-
 
 module.exports = router;
