@@ -63,6 +63,9 @@ const loginUser = async (req, res) => {
           expiresIn: "30d",
         });
 
+        // Kolla om användaren har ett temporärt lösenord
+        const isTemporaryPassword = user.temporaryPassword && user.temporaryPassword === password;
+
         res.json({
           _id: user._id,
           name: user.name,
@@ -70,6 +73,7 @@ const loginUser = async (req, res) => {
           isAdmin: user.isAdmin,
           profileImage: user.profileImage ? `/uploads/${user.profileImage}` : null,
           token,
+          isTemporaryPassword, // Lägg till flaggan här
         });
       } else {
         user.failedLoginAttempts += 1;
