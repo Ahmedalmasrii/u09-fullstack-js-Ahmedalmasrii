@@ -358,9 +358,6 @@
 
 // export default AdminPage;
 
-
-
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./AdminPage.css";
@@ -545,7 +542,7 @@ const AdminPage = () => {
 
     try {
       const { data } = await axios.put(
-        `${API_URL}/api/users/${userId}/unlock`,
+        `${API_URL}/api/users/${userId}/unlock`, // Skicka med userId
         {},
         config
       );
@@ -601,9 +598,7 @@ const AdminPage = () => {
               type="text"
               placeholder="Name"
               value={newUser.name}
-              onChange={(e) =>
-                setNewUser({ ...newUser, name: e.target.value })
-              }
+              onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
               required
             />
           </Form.Group>
