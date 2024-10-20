@@ -24,17 +24,24 @@ function LoginPage() {
         email,
         password,
       });
+  
       console.log("User logged in:", response.data);
-
-      login(response.data); // Send entire user object
-      setIsLoggedIn(true);
-      setTimeout(() => navigate("/profile"), 2000); // Redirect after 2 seconds
+  
+      // Kolla om användaren har ett temporärt lösenord
+      if (response.data.temporaryPassword) {
+        setError("You are using a temporary password. Please reset your password.");
+        setTimeout(() => navigate("/reset-password"), 2000); // Omdirigera till lösenordsbytes-sidan
+      } else {
+        login(response.data); // Skicka hela användarobjektet
+        setIsLoggedIn(true);
+        setTimeout(() => navigate("/profile"), 2000); // Omdirigera efter 2 sekunder
+      }
+  
     } catch (err) {
       setError(err.response.data.message);
       setIsLoading(false);
     }
   };
-
   return (
     <div className="login-container">
       <div className="login-box">
