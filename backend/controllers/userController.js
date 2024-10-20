@@ -261,4 +261,5 @@ module.exports = {
   updateUserName,
   updatePassword,
   updateProfileImage,
+  unlockUserAccount,
 };
