@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 import HomePage from "./pages/homePage";
 import ContactPage from "./pages/contactPage";
-import OffersPage from "./pages/OffersPage"; 
+import OffersPage from "./pages/OffersPage";
 
 import ServicesPage from "./pages/ServicesPage";
 import Navbar from "./components/Navbar";
@@ -49,7 +49,11 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/reset-password" element={<ResetPasswordPage />} /> {/* Ny route */}
+            <Route
+              path="/reset-password"
+              element={<ResetPasswordPage />}
+            />{" "}
+            {/* Ny route */}
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/offers" element={<OffersPage />} />
             <Route
@@ -77,7 +81,7 @@ function App() {
               }
             />
           </Routes>
-          
+
           <Footer />
         </div>
       </Router>
