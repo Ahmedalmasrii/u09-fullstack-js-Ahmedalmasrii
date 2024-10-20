@@ -1,4 +1,4 @@
-const cacheName = "clean-master-v1";
+const cacheName = "clean-master-v2"; // Uppdaterad cache-version
 const filesToCache = [
   "/",
   "/index.html",
@@ -12,7 +12,7 @@ const filesToCache = [
   "/bookings",
 ];
 
-// Installerar service worker och cachea filer
+// Installerar service worker och cachear filer
 self.addEventListener("install", (event) => {
   console.log("Service Worker installerad");
   event.waitUntil(
@@ -43,25 +43,30 @@ self.addEventListener("activate", (event) => {
       );
     })
   );
-  //service workern aktiv direkt
+  // Gör service workern aktiv direkt
   return self.clients.claim();
 });
 
 // Hämtar filer från nätverket först, och fallback till cache vid nätverksfel
 self.addEventListener("fetch", (event) => {
   console.log("Hämtar:", event.request.url);
-  event.respondWith(
-    fetch(event.request)
-      .then((response) => {
-        // Om nätverksanropet lyckas, cachea svaret
-        return caches.open(cacheName).then((cache) => {
-          cache.put(event.request, response.clone());
-          return response;
-        });
-      })
-      .catch(() => {
-        // Om nätverksanropet misslyckas, använd cache
-        return caches.match(event.request);
-      })
-  );
+  if (event.request.method === "GET") {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          // Om nätverksanropet lyckas, cachea svaret
+          return caches.open(cacheName).then((cache) => {
+            cache.put(event.request, response.clone());
+            return response;
+          });
+        })
+        .catch(() => {
+          // Om nätverksanropet misslyckas, använd cache
+          return caches.match(event.request);
+        })
+    );
+  } else {
+    // Om det inte är en GET-förfrågan, låt nätverket hantera den utan cache
+    event.respondWith(fetch(event.request));
+  }
 });
