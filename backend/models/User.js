@@ -20,8 +20,20 @@ const userSchema = new mongoose.Schema(
       default: false,
     },
     profileImage: {
-      type: String, // Lagra URL eller filväg till profilbilden
-      default: "", // Standardvärde om ingen bild är uppladdad
+      type: String,
+      default: "",
+    },
+    failedLoginAttempts: {
+      type: Number,
+      default: 0,
+    },
+    isLocked: {
+      type: Boolean,
+      default: false,
+    },
+    temporaryPassword: {
+      type: String,
+      default: null,
     },
   },
   { timestamps: true }
