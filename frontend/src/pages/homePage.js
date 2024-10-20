@@ -155,7 +155,7 @@ function HomePage() {
           <div className="team-list">
             <div className="team-member">
               <img
-                src="/images/team1.jpg"
+                src="/images/staff.jpg"
                 alt="Team Member 1"
                 className="team-image"
               />
@@ -163,21 +163,21 @@ function HomePage() {
               <p>Senior Cleaner</p>
             </div>
             <div className="team-member">
-              <img
-                src="/images/team2.jpg"
-                alt="Team Member 2"
+            <img
+                src="/images/staff2.jpg"
+                alt="Team Member 1"
                 className="team-image"
               />
-              <h4>Peter B.</h4>
+              <h4>Jackie B.</h4>
               <p>Commercial Specialist</p>
             </div>
             <div className="team-member">
-              <img
-                src="/images/team3.jpg"
-                alt="Team Member 3"
+            <img
+                src="/images/staff3.jpg"
+                alt="Team Member 1"
                 className="team-image"
               />
-              <h4>Emma T.</h4>
+              <h4>Peter T.</h4>
               <p>Customer Service Manager</p>
             </div>
           </div>
