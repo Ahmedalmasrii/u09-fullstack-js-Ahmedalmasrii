@@ -41,6 +41,7 @@ const registerUser = async (req, res) => {
   }
 };
 
+
 // Logga in användare
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
@@ -48,28 +49,77 @@ const loginUser = async (req, res) => {
   try {
     const user = await User.findOne({ email });
 
-    if (user && (await bcrypt.compare(password, user.password))) {
-      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-        expiresIn: "30d",
-      });
+    if (user) {
+      if (user.isLocked) {
+        return res.status(403).json({ message: "Account is locked. Please contact admin." });
+      }
 
-      res.json({
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        isAdmin: user.isAdmin,
-        profileImage: user.profileImage
-          ? `/uploads/${user.profileImage}`
-          : null,
-        token,
-      });
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (isMatch) {
+        user.failedLoginAttempts = 0; // Nollställ misslyckade försök vid lyckad inloggning
+        await user.save();
+
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+          expiresIn: "30d",
+        });
+
+        res.json({
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          isAdmin: user.isAdmin,
+          profileImage: user.profileImage ? `/uploads/${user.profileImage}` : null,
+          token,
+        });
+      } else {
+        user.failedLoginAttempts += 1;
+        if (user.failedLoginAttempts >= 4) {
+          user.isLocked = true;
+          await user.save();
+          return res.status(403).json({ message: "Account is locked due to multiple failed login attempts." });
+        }
+
+        await user.save();
+        return res.status(401).json({ message: "Incorrect email or password" });
+      }
     } else {
-      res.status(401).json({ message: "Fel e-postadress eller lösenord" });
+      res.status(401).json({ message: "Incorrect email or password" });
     }
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
+
+
+// Admin låser upp användare och tilldelar temporärt lösenord
+const unlockUserAccount = async (req, res) => {
+  const { userId } = req.params;
+  const temporaryPassword = Math.random().toString(36).slice(-8); // Genererar ett tillfälligt lösenord
+
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "Användare hittades inte" });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(temporaryPassword, salt);
+    user.isLocked = false;
+    user.failedLoginAttempts = 0;
+    user.temporaryPassword = temporaryPassword;
+
+    await user.save();
+
+    res.json({ message: "User account unlocked, temporary password assigned.", temporaryPassword });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
+
+
 
 // Får alla användare (endast för admin)
 const getAllUsers = async (req, res) => {
