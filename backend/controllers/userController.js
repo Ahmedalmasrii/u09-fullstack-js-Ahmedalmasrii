@@ -94,11 +94,11 @@ const loginUser = async (req, res) => {
 
 // Admin låser upp användare och tilldelar temporärt lösenord
 const unlockUserAccount = async (req, res) => {
-  const { userId } = req.params;
+  const { id } = req.params; 
   const temporaryPassword = Math.random().toString(36).slice(-8); // Genererar ett tillfälligt lösenord
 
   try {
-    const user = await User.findById(userId);
+    const user = await User.findById(id); 
     if (!user) {
       return res.status(404).json({ message: "Användare hittades inte" });
     }
