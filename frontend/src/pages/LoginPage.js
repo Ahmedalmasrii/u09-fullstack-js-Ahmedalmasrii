@@ -28,7 +28,7 @@ function LoginPage() {
       console.log("User logged in:", response.data);
   
       // Kolla om användaren har ett temporärt lösenord
-      if (response.data.temporaryPassword) {
+      if (response.data.isTemporaryPassword) {
         setError("You are using a temporary password. Please reset your password.");
         setTimeout(() => navigate("/reset-password"), 2000); // Omdirigera till lösenordsbytes-sidan
       } else {
@@ -42,6 +42,7 @@ function LoginPage() {
       setIsLoading(false);
     }
   };
+  
   return (
     <div className="login-container">
       <div className="login-box">
