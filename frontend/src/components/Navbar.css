@@ -1,6 +1,4 @@
-/* src/components/Navbar.css */
 
-/* Navbar container */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -57,7 +55,8 @@
 
 /* Hamburger menu button (visible only on small screens) */
 .hamburger {
-  display: none; /* Visible only on small screens */
+  display: none;
+  /* Visible only on small screens */
   font-size: 24px;
   background: none;
   border: none;
@@ -102,6 +101,7 @@
     opacity: 0;
     top: 0px;
   }
+
   100% {
     opacity: 1;
     top: 20px;
@@ -113,6 +113,7 @@
   0% {
     opacity: 1;
   }
+
   100% {
     opacity: 0;
     top: 0px;
@@ -263,16 +264,21 @@
     display: none;
     flex-direction: column;
     gap: 10px;
-    background-color: rgba(0, 0, 0, 0.9); /* Transparent background */
+    background-color: rgba(0, 0, 0, 0.9);
+    /* Transparent background */
     position: absolute;
     top: 60px;
     left: 50%;
     transform: translateX(-50%);
-    width: 80%; /* Limit width */
-    max-width: 300px; /* Maximize width */
+    width: 80%;
+    /* Limit width */
+    max-width: 300px;
+    /* Maximize width */
     padding: 20px;
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow */
+    border-radius: 8px;
+    /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* Add shadow */
     z-index: 999;
   }
 
@@ -281,11 +287,13 @@
   }
 
   .hamburger {
-    display: block; /* Visible on small screens */
+    display: block;
+    /* Visible on small screens */
   }
 
   .close-button {
-    display: block; /* Visible only on small screens */
+    display: block;
+    /* Visible only on small screens */
     text-align: center;
     font-size: 1.5rem;
     cursor: pointer;
@@ -314,6 +322,7 @@
 /* Hide close button on screens wider than 768px */
 @media (min-width: 769px) {
   .close-button {
-    display: none; /* Hide close button on large screens */
+    display: none;
+    /* Hide close button on large screens */
   }
 }

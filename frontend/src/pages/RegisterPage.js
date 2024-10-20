@@ -1,35 +1,39 @@
-
-import React, { useState } from 'react';
-import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
-import './RegisterPage.css'; // Importera CSS-filen för styling
+import React, { useState } from "react";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import "./RegisterPage.css"; // Importera CSS-filen för styling
 
 function RegisterPage() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState(''); // Ny state för framgångsmeddelande
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(""); // Ny state för framgångsmeddelande
   const navigate = useNavigate();
   const API_URL = process.env.REACT_APP_API_URL;
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(''); // Rensar eventuella tidigare felmeddelanden
-    setSuccess(''); // Rensar eventuella tidigare framgångsmeddelanden
+    setError(""); // Rensar eventuella tidigare felmeddelanden
+    setSuccess(""); // Rensar eventuella tidigare framgångsmeddelanden
 
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/users/register`, { name, email, password });
-      console.log('User registered:', response.data);
-      
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/api/users/register`,
+        { name, email, password }
+      );
+      console.log("User registered:", response.data);
+
       // Sätt ett framgångsmeddelande
-      setSuccess('Registration successful! Redirecting to login...');
-      
+      setSuccess("Registration successful! Redirecting to login...");
+
       // Omdirigera till inloggningssidan efter 3 sekunder
       setTimeout(() => {
-        navigate('/login');
+        navigate("/login");
       }, 3000);
     } catch (err) {
-      setError(err.response?.data?.message || 'Registration failed. Please try again.');
+      setError(
+        err.response?.data?.message || "Registration failed. Please try again."
+      );
     }
   };
 
@@ -75,13 +79,13 @@ function RegisterPage() {
             Register
           </button>
         </form>
-        
+
         {/* Visa felmeddelande om registrering misslyckas */}
         {error && <p className="error-message">{error}</p>}
-        
+
         {/* Visa framgångsmeddelande om registrering lyckas */}
         {success && <p className="success-message">{success}</p>}
-        
+
         <div className="register-footer">
           Already have an account?{" "}
           <Link to="/login" className="login-link">

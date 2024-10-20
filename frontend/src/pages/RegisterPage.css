@@ -4,7 +4,6 @@ html {
   padding: 0;
   font-family: "Arial", sans-serif;
   background: linear-gradient(135deg, #f7f8fc, #e6e9f0);
-  /* Ljusare och renare bakgrund */
   height: 100%;
 }
 
@@ -13,7 +12,6 @@ html {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  /* Fyll hela skärmen */
   padding: 20px;
 
   background-color: #EDDED3;
@@ -25,39 +23,38 @@ html {
 
 .register-box {
   background: #ffffff;
-  /* Vit bakgrund för rutan */
+
   border-radius: 12px;
-  /* Rundade hörn */
+
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  /* Djupare skugga */
+
   padding: 40px;
   max-width: 400px;
-  /* Begränsa bredden på rutan */
   width: 100%;
-  /* Anpassa sig efter skärmens storlek */
+
   text-align: center;
   margin: 20px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  /* Mjuk animationseffekt */
+
   box-sizing: border-box;
-  /* Inkludera padding och border i elementets totalbredd */
+
 }
 
 .register-box:hover {
   transform: translateY(-5px);
-  /* Lyft upp något vid hovring */
+
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-  /* Förstärkt skugga vid hovring */
+
 }
 
 .register-title {
   margin-bottom: 30px;
   color: #333;
-  /* Mörkare textfärg */
+
   font-size: 24px;
-  /* Större text för titeln */
+
   font-weight: bold;
-  /* Fetare text */
+
 }
 
 .register-form {
@@ -69,9 +66,9 @@ html {
 .input-group {
   margin-bottom: 20px;
   text-align: left;
-  /* Vänsterjustera texten */
+
   width: 100%;
-  /* Se till att input-fältet fyller hela container */
+
 }
 
 .input-group label {
@@ -79,55 +76,41 @@ html {
   margin-bottom: 8px;
   font-size: 14px;
   color: #555;
-  /* Ljusare textfärg */
+
 }
 
 .input-group input {
   width: 100%;
-  /* Använd hela bredden på containern */
   padding: 12px;
-  /* Ökad padding för bättre textinmatning */
   border: 1px solid #d1d5db;
   border-radius: 8px;
-  /* Rundade hörn */
   transition: border-color 0.3s ease;
   font-size: 16px;
-  /* Större text för bättre läsbarhet */
   box-sizing: border-box;
-  /* Inkludera padding och border i bredden */
 }
 
 .input-group input:focus {
   border-color: #a5b4fc;
-  /* Ljusblå när den är fokuserad */
   outline: none;
-  /* Ta bort standard outline */
   box-shadow: 0 0 0 4px rgba(165, 180, 252, 0.3);
-  /* Ljus skugga för att indikera fokus */
 }
 
 .register-button {
   background: #20B2D9;
-  /* Mjuk lila färg */
   color: #fff;
   border: none;
   padding: 14px;
   border-radius: 8px;
   cursor: pointer;
   font-size: 16px;
-  /* Större text för knappen */
   transition: background 0.3s ease, transform 0.2s ease;
   width: 100%;
-  /* Fyll bredden på containern */
   margin-top: 10px;
-  /* Lite extra space ovanför knappen */
 }
 
 .register-button:hover {
   background: #26e0a8;
-  /* Ljusare lila när man hovrar */
   transform: translateY(-2px);
-  /* Liten lyfteffekt vid hovring */
 }
 
 .register-footer {

@@ -88,7 +88,7 @@ function Navbar() {
         <div className="navbar-logo">
           <Link to="/">Clean Master</Link>
         </div>
-        
+
         {/* Navigation Links */}
         <ul className={`navbar-links ${menuOpen ? "show" : ""}`}>
           <li>
@@ -106,7 +106,7 @@ function Navbar() {
               Offers
             </Link>
           </li>
-          
+
           {/* Services Dropdown */}
           <li className="services-dropdown">
             <button onClick={toggleDropdown} className="dropdown-button">
@@ -115,12 +115,18 @@ function Navbar() {
             {dropdownOpen && (
               <ul className="dropdown-menu">
                 <li>
-                  <Link to="/services/residential" onClick={handleDropdownLinkClick}>
+                  <Link
+                    to="/services/residential"
+                    onClick={handleDropdownLinkClick}
+                  >
                     Residential Cleaning
                   </Link>
                 </li>
                 <li>
-                  <Link to="/services/commercial" onClick={handleDropdownLinkClick}>
+                  <Link
+                    to="/services/commercial"
+                    onClick={handleDropdownLinkClick}
+                  >
                     Commercial Cleaning
                   </Link>
                 </li>
@@ -135,7 +141,10 @@ function Navbar() {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/services/post-construction" onClick={handleDropdownLinkClick}>
+                  <Link
+                    to="/services/post-construction"
+                    onClick={handleDropdownLinkClick}
+                  >
                     Post-Construction Cleaning
                   </Link>
                 </li>

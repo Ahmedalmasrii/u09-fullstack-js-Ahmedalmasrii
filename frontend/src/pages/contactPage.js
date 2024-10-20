@@ -1,4 +1,3 @@
-// src/pages/ContactPage.js
 import React, { useState } from "react";
 import axios from "axios";
 import "./contactPage.css";
@@ -49,7 +48,8 @@ function ContactPage() {
       <header className="contact-header">
         <h1>Contact Us</h1>
         <p>
-          We would love to hear from you! Fill out the form below to get in touch.
+          We would love to hear from you! Fill out the form below to get in
+          touch.
         </p>
       </header>
 
@@ -119,7 +119,8 @@ function ContactPage() {
           <div className="popup-content">
             <h2>Thank you for your message!</h2>
             <p>
-              We have received your message and will get back to you as soon as possible.
+              We have received your message and will get back to you as soon as
+              possible.
             </p>
             <button
               onClick={handleClosePopup}

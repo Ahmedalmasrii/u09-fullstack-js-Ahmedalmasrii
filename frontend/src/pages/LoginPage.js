@@ -40,7 +40,7 @@ function LoginPage() {
       <div className="login-box">
         {/* Login Title */}
         <h1 className="login-title">Welcome Back</h1>
-        
+
         {/* Login Form */}
         <form onSubmit={handleSubmit} className="login-form">
           {/* Email Input */}
@@ -55,7 +55,7 @@ function LoginPage() {
               required
             />
           </div>
-          
+
           {/* Password Input */}
           <div className="input-group">
             <label htmlFor="password">Password</label>
@@ -68,13 +68,13 @@ function LoginPage() {
               required
             />
           </div>
-          
+
           {/* Submit Button */}
           <button type="submit" className="login-button" disabled={isLoading}>
             {isLoading ? <div className="loading-spinner"></div> : "Login"}
           </button>
         </form>
-        
+
         {/* Success Message and Firework Animation */}
         {isLoggedIn && (
           <>
@@ -86,10 +86,10 @@ function LoginPage() {
             </div>
           </>
         )}
-        
+
         {/* Error Message */}
         {error && <p className="error-message">{error}</p>}
-        
+
         {/* Footer with Register Link */}
         <div className="login-footer">
           Don't have an account?{" "}

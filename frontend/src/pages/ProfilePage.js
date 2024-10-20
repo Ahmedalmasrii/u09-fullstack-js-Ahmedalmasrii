@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./ProfilePage.css";
@@ -13,7 +12,9 @@ const ProfilePage = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
   const [profileImage, setProfileImage] = useState(null);
-  const [bookingsWithUnreadMessages, setBookingsWithUnreadMessages] = useState([]);
+  const [bookingsWithUnreadMessages, setBookingsWithUnreadMessages] = useState(
+    []
+  );
   const [allMessages, setAllMessages] = useState([]);
 
   const API_URL = process.env.REACT_APP_API_URL;
@@ -38,9 +39,7 @@ const ProfilePage = () => {
         setProfileImage(userData.profileImage);
       } catch (err) {
         setMessage(
-          `Error fetching data: ${
-            err.response?.data?.message || err.message
-          }`
+          `Error fetching data: ${err.response?.data?.message || err.message}`
         );
       }
     };
@@ -103,9 +102,7 @@ const ProfilePage = () => {
       setMessage("Name updated successfully!");
     } catch (err) {
       setMessage(
-        `Error updating name: ${
-          err.response?.data?.message || err.message
-        }`
+        `Error updating name: ${err.response?.data?.message || err.message}`
       );
     }
   };
@@ -134,9 +131,7 @@ const ProfilePage = () => {
       setConfirmPassword("");
     } catch (err) {
       setMessage(
-        `Error updating password: ${
-          err.response?.data?.message || err.message
-        }`
+        `Error updating password: ${err.response?.data?.message || err.message}`
       );
     }
   };
@@ -168,9 +163,7 @@ const ProfilePage = () => {
       setMessage("Profile image updated successfully!");
     } catch (err) {
       setMessage(
-        `Error uploading image: ${
-          err.response?.data?.message || err.message
-        }`
+        `Error uploading image: ${err.response?.data?.message || err.message}`
       );
     }
   };

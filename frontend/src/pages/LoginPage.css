@@ -159,6 +159,7 @@ html {
 }
 
 @keyframes explode {
+
   0%,
   20% {
     transform: scale(0);

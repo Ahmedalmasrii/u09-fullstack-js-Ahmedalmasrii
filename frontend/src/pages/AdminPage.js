@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./AdminPage.css";
@@ -30,9 +29,7 @@ const AdminPage = () => {
         setUsers(usersData);
       } catch (err) {
         setMessage(
-          `Error fetching users: ${
-            err.response?.data?.message || err.message
-          }`
+          `Error fetching users: ${err.response?.data?.message || err.message}`
         );
       }
 
@@ -85,9 +82,7 @@ const AdminPage = () => {
       setMessage("User removed successfully.");
     } catch (err) {
       setMessage(
-        `Error deleting user: ${
-          err.response?.data?.message || err.message
-        }`
+        `Error deleting user: ${err.response?.data?.message || err.message}`
       );
     }
   };
@@ -149,9 +144,7 @@ const AdminPage = () => {
     } catch (err) {
       console.error(err);
       setMessage(
-        `Error sending message: ${
-          err.response?.data?.message || err.message
-        }`
+        `Error sending message: ${err.response?.data?.message || err.message}`
       );
     }
   };
@@ -172,9 +165,7 @@ const AdminPage = () => {
     } catch (err) {
       console.error(err);
       setMessage(
-        `Error deleting booking: ${
-          err.response?.data?.message || err.message
-        }`
+        `Error deleting booking: ${err.response?.data?.message || err.message}`
       );
     }
   };
