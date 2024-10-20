@@ -1,25 +1,3 @@
-/* .admin-container {
-  background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-}
-
-.admin-section {
-  margin-bottom: 40px;
-}
-
-h1,
-h2 {
-  color: #333;
-}
-
-.message {
-  margin-top: 20px;
-} */
-
-
-/* AdminPage.css */
-
 .admin-container {
   background: linear-gradient(283deg, #979797, #b7b3b7);
   padding: 20px;
@@ -41,4 +19,3 @@ h2 {
 .messageField {
   margin-top: 0.5rem;
 }
-
