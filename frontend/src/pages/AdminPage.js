@@ -170,6 +170,30 @@ const AdminPage = () => {
     }
   };
 
+  const handleUnlockUser = async (userId) => {
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    try {
+      const { data } = await axios.put(
+        `${API_URL}/api/users/${userId}/unlock`,
+        {},
+        config
+      );
+      setMessage(
+        `User account unlocked. Temporary password: ${data.temporaryPassword}`
+      );
+    } catch (err) {
+      setMessage(
+        `Error unlocking user: ${err.response?.data?.message || err.message}`
+      );
+    }
+  };
+
   return (
     <Container className="admin-container mt-5">
       <h1 className="mb-4 text-center">Admin Panel</h1>
@@ -206,6 +230,14 @@ const AdminPage = () => {
                       variant="danger"
                     >
                       Remove
+                    </Button>
+                  </td>
+                  <td>
+                    <Button
+                      onClick={() => handleUnlockUser(user._id)}
+                      variant="warning"
+                    >
+                      Unlock
                     </Button>
                   </td>
                 </tr>
