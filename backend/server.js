@@ -2,16 +2,15 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const dotenv = require("dotenv");
-const path = require("path"); 
+const path = require("path");
 
 dotenv.config();
 
 const app = express();
 
-
 app.use(
   cors({
-    origin: 'https://cleanmaster12.netlify.app', // frontend-URL
+    origin: "https://cleanmaster12.netlify.app", // frontend-URL
     credentials: true,
   })
 );
@@ -24,8 +23,8 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 const userRoutes = require("./routes/userRoutes");
 
 // Routes
-const contactRoutes = require('./routes/contactRoutes');
-app.use('/api/contact', contactRoutes);
+const contactRoutes = require("./routes/contactRoutes");
+app.use("/api/contact", contactRoutes);
 
 app.use("/api/users", userRoutes);
 

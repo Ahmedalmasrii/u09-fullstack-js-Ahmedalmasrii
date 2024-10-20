@@ -1,25 +1,5 @@
 const Booking = require("../models/Booking");
 
-// Skapar en ny bokning
-// const createBooking = async (req, res) => {
-//   const { service, date, time, name, email, phone } = req.body;
-//   try {
-//     const booking = await Booking.create({
-//       service,
-//       date,
-//       time,
-//       name,
-//       email,
-//       phone,
-//       user: req.user._id, // Lägger till användar-ID från inloggningen
-//     });
-//     res.status(201).json(booking);
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// };
-
-
 const createBooking = async (req, res) => {
   const { service, date, time, name, email, phone, discountCode } = req.body; // Lägg till rabattkoden här
   try {
@@ -38,7 +18,6 @@ const createBooking = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
 
 // Hämtar alla bokningar för admin
 const getAllBookings = async (req, res) => {
@@ -132,7 +111,9 @@ const markMessageAsRead = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Kunde inte markera meddelandet som läst" });
+    res
+      .status(500)
+      .json({ message: "Kunde inte markera meddelandet som läst" });
   }
 };
 
@@ -143,5 +124,5 @@ module.exports = {
   updateBookingStatus,
   deleteBooking,
   updateBookingMessage,
-  markMessageAsRead, // Se till att denna funktion exporteras
+  markMessageAsRead, 
 };
