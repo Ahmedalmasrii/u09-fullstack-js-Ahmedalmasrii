@@ -50,9 +50,7 @@ const loginUser = async (req, res) => {
 
     if (user) {
       if (user.isLocked) {
-        return res
-          .status(403)
-          .json({ message: "Account is locked. Please contact admin." });
+        return res.status(403).json({ message: "Account is locked. Please contact admin." });
       }
 
       const isMatch = await bcrypt.compare(password, user.password);
@@ -64,32 +62,20 @@ const loginUser = async (req, res) => {
           expiresIn: "30d",
         });
 
-        // Kolla om användaren använder ett temporärt lösenord
-        const isTemporaryPassword =
-          user.temporaryPassword && user.temporaryPassword === password;
-
         res.json({
           _id: user._id,
           name: user.name,
           email: user.email,
           isAdmin: user.isAdmin,
-          profileImage: user.profileImage
-            ? `/uploads/${user.profileImage}`
-            : null,
+          profileImage: user.profileImage ? `/uploads/${user.profileImage}` : null,
           token,
-          isTemporaryPassword, // Skickar med flaggan för temporärt lösenord
         });
       } else {
         user.failedLoginAttempts += 1;
         if (user.failedLoginAttempts >= 4) {
           user.isLocked = true;
           await user.save();
-          return res
-            .status(403)
-            .json({
-              message:
-                "Account is locked due to multiple failed login attempts.",
-            });
+          return res.status(403).json({ message: "Account is locked due to multiple failed login attempts." });
         }
 
         await user.save();
