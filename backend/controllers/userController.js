@@ -33,14 +33,13 @@ const registerUser = async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
-      profileImage: user.profileImage ? `/uploads/${user.profileImage}` : null, // Returnerar korrekt profilbild
+      profileImage: user.profileImage ? `/uploads/${user.profileImage}` : null,
       token,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
-
 
 // Logga in användare
 const loginUser = async (req, res) => {
@@ -51,7 +50,9 @@ const loginUser = async (req, res) => {
 
     if (user) {
       if (user.isLocked) {
-        return res.status(403).json({ message: "Account is locked. Please contact admin." });
+        return res
+          .status(403)
+          .json({ message: "Account is locked. Please contact admin." });
       }
 
       const isMatch = await bcrypt.compare(password, user.password);
@@ -63,24 +64,32 @@ const loginUser = async (req, res) => {
           expiresIn: "30d",
         });
 
-        // Kolla om användaren har ett temporärt lösenord
-        const isTemporaryPassword = user.temporaryPassword && user.temporaryPassword === password;
+        // Kolla om användaren använder ett temporärt lösenord
+        const isTemporaryPassword =
+          user.temporaryPassword && user.temporaryPassword === password;
 
         res.json({
           _id: user._id,
           name: user.name,
           email: user.email,
           isAdmin: user.isAdmin,
-          profileImage: user.profileImage ? `/uploads/${user.profileImage}` : null,
+          profileImage: user.profileImage
+            ? `/uploads/${user.profileImage}`
+            : null,
           token,
-          isTemporaryPassword, // Lägg till flaggan här
+          isTemporaryPassword, // Skickar med flaggan för temporärt lösenord
         });
       } else {
         user.failedLoginAttempts += 1;
         if (user.failedLoginAttempts >= 4) {
           user.isLocked = true;
           await user.save();
-          return res.status(403).json({ message: "Account is locked due to multiple failed login attempts." });
+          return res
+            .status(403)
+            .json({
+              message:
+                "Account is locked due to multiple failed login attempts.",
+            });
         }
 
         await user.save();
@@ -94,15 +103,13 @@ const loginUser = async (req, res) => {
   }
 };
 
-
-
 // Admin låser upp användare och tilldelar temporärt lösenord
 const unlockUserAccount = async (req, res) => {
-  const { id } = req.params; 
-  const temporaryPassword = Math.random().toString(36).slice(-8); // Genererar ett tillfälligt lösenord
+  const { id } = req.params;
+  const temporaryPassword = Math.random().toString(36).slice(-8); // Genererar ett temporärt lösenord
 
   try {
-    const user = await User.findById(id); 
+    const user = await User.findById(id);
     if (!user) {
       return res.status(404).json({ message: "Användare hittades inte" });
     }
@@ -115,15 +122,14 @@ const unlockUserAccount = async (req, res) => {
 
     await user.save();
 
-    res.json({ message: "User account unlocked, temporary password assigned.", temporaryPassword });
+    res.json({
+      message: "User account unlocked, temporary password assigned.",
+      temporaryPassword,
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
-
-
-
-
 
 // Får alla användare (endast för admin)
 const getAllUsers = async (req, res) => {
@@ -150,7 +156,6 @@ const deleteUser = async (req, res) => {
       res.status(404).json({ message: "Användare hittades inte" });
     }
   } catch (error) {
-    console.error(error); // Lägg till denna rad för att logga felet
     res.status(500).json({ message: "Kunde inte ta bort användare" });
   }
 };
@@ -168,7 +173,7 @@ const getUserProfile = async (req, res) => {
         isAdmin: user.isAdmin,
         profileImage: user.profileImage
           ? `/uploads/${user.profileImage}`
-          : null, // Returnerar korrekt profilbild
+          : null,
       });
     } else {
       res.status(404).json({ message: "Användare hittades inte" });
@@ -201,6 +206,7 @@ const updatePassword = async (req, res) => {
     if (user) {
       const salt = await bcrypt.genSalt(10);
       user.password = await bcrypt.hash(req.body.password, salt);
+      user.temporaryPassword = undefined; // Nollställer temporärt lösenord efter att nytt lösenord är satt
       await user.save();
       res.json({ message: "Lösenord uppdaterat" });
     } else {
@@ -235,23 +241,19 @@ const updateProfileImage = async (req, res) => {
       if (fs.existsSync(previousImagePath)) {
         try {
           fs.unlinkSync(previousImagePath);
-          console.log(`Tidigare bild borttagen: ${previousImagePath}`);
         } catch (unlinkErr) {
           console.error(`Fel vid borttagning av tidigare bild: ${unlinkErr}`);
-          // Fortsätt även om borttagningen misslyckas
         }
       }
     }
 
     // Spara den nya bildens filnamn
-    user.profileImage = req.file.filename; // Spara endast filnamnet
+    user.profileImage = req.file.filename;
     await user.save();
 
-    // Returnera rätt URL till frontend
     const imageUrl = `/uploads/${user.profileImage}`;
     res.json({ imageUrl });
   } catch (error) {
-    console.error("Fel vid uppdatering av profilbild:", error);
     res.status(500).json({ message: "Fel vid uppdatering av profilbild" });
   }
 };
