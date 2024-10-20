@@ -87,6 +87,7 @@ router.put(
 );
 
 // Admin låser upp konto
+const { unlockUserAccount } = require("../controllers/userController"); // Se till att denna är importerad
 router.put("/:id/unlock", protect, admin, unlockUserAccount);
 
 
