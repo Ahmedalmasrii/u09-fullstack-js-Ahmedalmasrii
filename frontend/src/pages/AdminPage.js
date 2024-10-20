@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./AdminPage.css";
@@ -9,19 +10,18 @@ const AdminPage = () => {
   const [contactMessages, setContactMessages] = useState([]);
   const [message, setMessage] = useState("");
   const [messageContent, setMessageContent] = useState({});
-  const API_URL = process.env.REACT_APP_API_URL;
+  const API_URL = process.env.REACT_APP_API_URL; // Base API URL from environment variables
 
   useEffect(() => {
-    
     const fetchData = async () => {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token"); // Get token from local storage
       const config = {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`, // Set authorization header
         },
       };
 
-      // Hämta användare
+      // Fetch users
       try {
         const { data: usersData } = await axios.get(
           `${API_URL}/api/users`,
@@ -30,13 +30,13 @@ const AdminPage = () => {
         setUsers(usersData);
       } catch (err) {
         setMessage(
-          `Fel vid hämtning av användare: ${
+          `Error fetching users: ${
             err.response?.data?.message || err.message
           }`
         );
       }
 
-      // Hämta bokningar
+      // Fetch bookings
       try {
         const { data: bookingsData } = await axios.get(
           `${API_URL}/api/bookings`,
@@ -45,13 +45,13 @@ const AdminPage = () => {
         setBookings(bookingsData);
       } catch (err) {
         setMessage(
-          `Fel vid hämtning av bokningar: ${
+          `Error fetching bookings: ${
             err.response?.data?.message || err.message
           }`
         );
       }
 
-      // Hämta kontaktmeddelanden
+      // Fetch contact messages
       try {
         const { data: contactData } = await axios.get(
           `${API_URL}/api/contact`,
@@ -60,7 +60,7 @@ const AdminPage = () => {
         setContactMessages(contactData);
       } catch (err) {
         setMessage(
-          `Fel vid hämtning av kontaktmeddelanden: ${
+          `Error fetching contact messages: ${
             err.response?.data?.message || err.message
           }`
         );
@@ -70,7 +70,7 @@ const AdminPage = () => {
     fetchData();
   }, [API_URL]);
 
-  // Ta bort en användare
+  // Delete a user
   const handleDeleteUser = async (userId) => {
     const token = localStorage.getItem("token");
     const config = {
@@ -82,17 +82,17 @@ const AdminPage = () => {
     try {
       await axios.delete(`${API_URL}/api/users/${userId}`, config);
       setUsers(users.filter((user) => user._id !== userId));
-      setMessage("Användare borttagen");
+      setMessage("User removed successfully.");
     } catch (err) {
       setMessage(
-        `Fel vid borttagning av användare: ${
+        `Error deleting user: ${
           err.response?.data?.message || err.message
         }`
       );
     }
   };
 
-  // Ändra status på en bokning
+  // Update booking status
   const handleUpdateBookingStatus = async (bookingId, status) => {
     const token = localStorage.getItem("token");
     const config = {
@@ -108,27 +108,28 @@ const AdminPage = () => {
         config
       );
 
+      // Update booking status in state
       setBookings(
         bookings.map((booking) =>
           booking._id === bookingId ? { ...booking, status } : booking
         )
       );
-      setMessage("Bokningsstatus uppdaterad");
+      setMessage("Booking status updated successfully.");
     } catch (err) {
       setMessage(
-        `Fel vid uppdatering av bokningsstatus: ${
+        `Error updating booking status: ${
           err.response?.data?.message || err.message
         }`
       );
     }
   };
 
-  // Hantera ändring i meddelandefältet
+  // Handle message content change
   const handleMessageChange = (bookingId, value) => {
     setMessageContent({ ...messageContent, [bookingId]: value });
   };
 
-  // Skicka meddelande till användaren
+  // Send message to user
   const handleSendMessage = async (bookingId) => {
     const token = localStorage.getItem("token");
     const config = {
@@ -144,18 +145,18 @@ const AdminPage = () => {
         { message: messageContent[bookingId] },
         config
       );
-      setMessage("Meddelande skickat");
+      setMessage("Message sent successfully.");
     } catch (err) {
       console.error(err);
       setMessage(
-        `Fel vid skickande av meddelande: ${
+        `Error sending message: ${
           err.response?.data?.message || err.message
         }`
       );
     }
   };
 
-  // Ta bort en bokning
+  // Delete a booking
   const handleDeleteBooking = async (bookingId) => {
     const token = localStorage.getItem("token");
     const config = {
@@ -167,11 +168,11 @@ const AdminPage = () => {
     try {
       await axios.delete(`${API_URL}/api/bookings/${bookingId}`, config);
       setBookings(bookings.filter((booking) => booking._id !== bookingId));
-      setMessage("Bokning borttagen");
+      setMessage("Booking removed successfully.");
     } catch (err) {
       console.error(err);
       setMessage(
-        `Fel vid borttagning av bokning: ${
+        `Error deleting booking: ${
           err.response?.data?.message || err.message
         }`
       );
@@ -180,25 +181,26 @@ const AdminPage = () => {
 
   return (
     <Container className="admin-container mt-5">
-      <h1 className="mb-4 text-center">Adminpanelen</h1>
+      <h1 className="mb-4 text-center">Admin Panel</h1>
 
+      {/* Display success or error messages */}
       {message && (
         <Alert variant="success" onClose={() => setMessage("")} dismissible>
           {message}
         </Alert>
       )}
 
-      {/* Användarhantering */}
+      {/* User Management Section */}
       <div className="admin-section mb-5">
-        <h2>Användarhantering</h2>
+        <h2>User Management</h2>
         {users.length > 0 ? (
           <Table striped bordered hover responsive className="admin-table">
             <thead>
               <tr>
-                <th>Namn</th>
+                <th>Name</th>
                 <th>Email</th>
                 <th>Admin</th>
-                <th>Åtgärder</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -206,13 +208,13 @@ const AdminPage = () => {
                 <tr key={user._id}>
                   <td>{user.name}</td>
                   <td>{user.email}</td>
-                  <td>{user.isAdmin ? "Ja" : "Nej"}</td>
+                  <td>{user.isAdmin ? "Yes" : "No"}</td>
                   <td>
                     <Button
                       onClick={() => handleDeleteUser(user._id)}
                       variant="danger"
                     >
-                      Ta bort
+                      Remove
                     </Button>
                   </td>
                 </tr>
@@ -220,24 +222,24 @@ const AdminPage = () => {
             </tbody>
           </Table>
         ) : (
-          <p>Inga användare hittades.</p>
+          <p>No users found.</p>
         )}
       </div>
 
-      {/* Bokningshantering */}
+      {/* Booking Management Section */}
       <div className="admin-section mb-5">
-        <h2>Bokningshantering</h2>
+        <h2>Booking Management</h2>
         {bookings.length > 0 ? (
           <Table striped bordered hover responsive className="admin-table">
             <thead>
               <tr>
-                <th>Tjänst</th>
-                <th>Datum</th>
-                <th>Tid</th>
-                <th>Namn</th>
+                <th>Service</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Name</th>
                 <th>Status</th>
-                <th>Meddelande</th>
-                <th>Åtgärder</th>
+                <th>Message</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -255,9 +257,9 @@ const AdminPage = () => {
                         handleUpdateBookingStatus(booking._id, e.target.value)
                       }
                     >
-                      <option value="Mottagen">Mottagen</option>
-                      <option value="Behandlad">Behandlad</option>
-                      <option value="Slutförd">Slutförd</option>
+                      <option value="Received">Received</option>
+                      <option value="Processed">Processed</option>
+                      <option value="Completed">Completed</option>
                     </Form.Control>
                   </td>
                   <td>
@@ -269,14 +271,14 @@ const AdminPage = () => {
                         onChange={(e) =>
                           handleMessageChange(booking._id, e.target.value)
                         }
-                        placeholder="Skriv ett meddelande"
+                        placeholder="Write a message"
                       />
                       <Button
                         onClick={() => handleSendMessage(booking._id)}
                         variant="primary"
                         className="mt-2"
                       >
-                        Skicka
+                        Send
                       </Button>
                     </Form.Group>
                   </td>
@@ -285,7 +287,7 @@ const AdminPage = () => {
                       onClick={() => handleDeleteBooking(booking._id)}
                       variant="danger"
                     >
-                      Ta bort
+                      Remove
                     </Button>
                   </td>
                 </tr>
@@ -293,22 +295,22 @@ const AdminPage = () => {
             </tbody>
           </Table>
         ) : (
-          <p>Inga bokningar hittades.</p>
+          <p>No bookings found.</p>
         )}
       </div>
 
-      {/* Kontaktmeddelanden */}
+      {/* Contact Messages Section */}
       <div className="admin-section">
-        <h2>Kontaktmeddelanden</h2>
+        <h2>Contact Messages</h2>
         {contactMessages.length > 0 ? (
           <Table striped bordered hover responsive className="admin-table">
             <thead>
               <tr>
-                <th>Namn</th>
-                <th>E-post</th>
-                <th>Ämne</th>
-                <th>Meddelande</th>
-                <th>Datum</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Subject</th>
+                <th>Message</th>
+                <th>Date</th>
               </tr>
             </thead>
             <tbody>
@@ -324,7 +326,7 @@ const AdminPage = () => {
             </tbody>
           </Table>
         ) : (
-          <p>Inga kontaktmeddelanden hittades.</p>
+          <p>No contact messages found.</p>
         )}
       </div>
     </Container>
