@@ -6,7 +6,7 @@ const asyncHandler = require("express-async-handler");
 const ContactMessage = require("../models/contactModel");
 
 //  middleware för autentisering och admin-kontroll
-const { protect, admin } = require("../middleware/authMiddleware");
+const { protect, admin } = require("../middlewares/authMiddleware");
 
 // POST-route för att skicka kontaktmeddelande
 router.post(
