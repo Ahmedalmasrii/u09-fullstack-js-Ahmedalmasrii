@@ -98,7 +98,7 @@
   text-align: center;
   max-width: 500px;
 
-  /* Lägg till dessa */
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -114,12 +114,14 @@
 
 .close-button {
   padding: 10px 20px;
-  background-color: #5ca9fb;
+  background-color: red !important; 
   color: #fff;
   border: none;
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
+  display: block !important; 
+  visibility: visible !important; 
 }
 
 .close-button:hover {

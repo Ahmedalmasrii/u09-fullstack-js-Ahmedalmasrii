@@ -1,13 +1,13 @@
 // src/pages/ContactPage.js
-import React, { useState } from 'react';
-import axios from 'axios';
-import './contactPage.css';
+import React, { useState } from "react";
+import axios from "axios";
+import "./contactPage.css";
 
 function ContactPage() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [subject, setSubject] = useState('');
-  const [messageContent, setMessageContent] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [messageContent, setMessageContent] = useState("");
   const [showPopup, setShowPopup] = useState(false);
 
   const API_URL = process.env.REACT_APP_API_URL;
@@ -27,7 +27,7 @@ function ContactPage() {
       // Visa popup
       setShowPopup(true);
     } catch (err) {
-      console.error('Fel vid skickande av meddelande:', err);
+      console.error("Fel vid skickande av meddelande:", err);
       // Hantera fel, visa eventuellt ett felmeddelande till användaren
     }
   };
@@ -35,17 +35,20 @@ function ContactPage() {
   const handleClosePopup = () => {
     setShowPopup(false);
     // Töm input-fälten
-    setName('');
-    setEmail('');
-    setSubject('');
-    setMessageContent('');
+    setName("");
+    setEmail("");
+    setSubject("");
+    setMessageContent("");
   };
 
   return (
     <div className="contact-page">
       <header className="contact-header">
         <h1>Kontakta oss</h1>
-        <p>Vi skulle gärna vilja höra från dig! Fyll i formuläret nedan för att komma i kontakt.</p>
+        <p>
+          Vi skulle gärna vilja höra från dig! Fyll i formuläret nedan för att
+          komma i kontakt.
+        </p>
       </header>
 
       <form className="contact-form" onSubmit={handleSubmit}>
@@ -93,15 +96,25 @@ function ContactPage() {
             onChange={(e) => setMessageContent(e.target.value)}
           ></textarea>
         </div>
-        <button type="submit" className="submit-button">Skicka meddelande</button>
+        <button type="submit" className="submit-button">
+          Skicka meddelande
+        </button>
       </form>
-
       {showPopup && (
         <div className="popup">
           <div className="popup-content">
             <h2>Tack för ditt meddelande!</h2>
-            <p>Vi har mottagit ditt meddelande och återkommer till dig så snart som möjligt.</p>
-            <button onClick={handleClosePopup} className="close-button">Stäng</button>
+            <p>
+              Vi har mottagit ditt meddelande och återkommer till dig så snart
+              som möjligt.
+            </p>
+            <button
+              onClick={handleClosePopup}
+              className="close-button"
+              id="close-button"
+            >
+              Stäng
+            </button>
           </div>
         </div>
       )}
