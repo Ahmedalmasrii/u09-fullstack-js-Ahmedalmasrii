@@ -86,4 +86,8 @@ router.put(
   updateProfileImage
 );
 
+// Admin låser upp konto
+router.put("/:id/unlock", protect, admin, unlockUserAccount);
+
+
 module.exports = router;
