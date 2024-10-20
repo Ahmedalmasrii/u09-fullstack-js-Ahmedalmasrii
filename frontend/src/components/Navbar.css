@@ -1,4 +1,6 @@
 /* src/components/Navbar.css */
+
+/* Navbar container */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -10,6 +12,7 @@
   z-index: 1000;
 }
 
+/* Logo styling */
 .navbar-logo a {
   color: #fff;
   text-decoration: none;
@@ -17,6 +20,7 @@
   font-weight: bold;
 }
 
+/* Navigation links container */
 .navbar-links {
   list-style: none;
   display: flex;
@@ -26,10 +30,12 @@
   align-items: center;
 }
 
+/* Individual navigation link items */
 .navbar-links li {
   position: relative;
 }
 
+/* Links and dropdown buttons styling */
 .navbar-links a,
 .dropdown-button {
   color: #fff;
@@ -43,13 +49,15 @@
   cursor: pointer;
 }
 
+/* Hover effect for links and dropdown buttons */
 .navbar-links a:hover,
 .dropdown-button:hover {
   background-color: #7d7d7d;
 }
 
+/* Hamburger menu button (visible only on small screens) */
 .hamburger {
-  display: none; /* Visas bara på små skärmar */
+  display: none; /* Visible only on small screens */
   font-size: 24px;
   background: none;
   border: none;
@@ -57,6 +65,7 @@
   cursor: pointer;
 }
 
+/* Logout button styling */
 .logout-button {
   background-color: #ff4b5c;
   border: none;
@@ -67,11 +76,12 @@
   transition: background-color 0.3s ease;
 }
 
+/* Hover effect for logout button */
 .logout-button:hover {
   background-color: #e60023;
 }
 
-/* Message Box */
+/* Message Box styling */
 .message-box {
   position: fixed;
   top: 20px;
@@ -86,6 +96,7 @@
   animation: slideIn 0.5s ease, fadeOut 0.5s ease 2.5s forwards;
 }
 
+/* Slide-in animation */
 @keyframes slideIn {
   0% {
     opacity: 0;
@@ -97,6 +108,7 @@
   }
 }
 
+/* Fade-out animation */
 @keyframes fadeOut {
   0% {
     opacity: 1;
@@ -107,7 +119,7 @@
   }
 }
 
-/* Dropdown Menu */
+/* Dropdown Menu styling */
 .services-dropdown .dropdown-menu {
   display: block;
   position: absolute;
@@ -121,11 +133,13 @@
   min-width: 200px;
 }
 
+/* Dropdown menu list items */
 .services-dropdown .dropdown-menu li {
   list-style: none;
   margin: 0;
 }
 
+/* Dropdown menu links styling */
 .services-dropdown .dropdown-menu a {
   color: #333;
   text-decoration: none;
@@ -134,21 +148,24 @@
   transition: background-color 0.3s;
 }
 
+/* Hover effect for dropdown menu links */
 .services-dropdown .dropdown-menu a:hover {
   background-color: #f0f0f0;
   border-radius: 4px;
 }
 
-
+/* Search bar container */
 .navbar-search {
   position: relative;
 }
 
+/* Search form styling */
 .navbar-search form {
   display: flex;
   align-items: center;
 }
 
+/* Search input field styling */
 .navbar-search input {
   padding: 5px;
   font-size: 16px;
@@ -156,6 +173,7 @@
   border-radius: 4px 0 0 4px;
 }
 
+/* Search button styling */
 .navbar-search button {
   padding: 5px 10px;
   background-color: #5ca9fb;
@@ -166,19 +184,23 @@
   transition: background-color 0.3s;
 }
 
+/* Hover effect for search button */
 .navbar-search button:hover {
   background-color: #3b82f6;
 }
 
+/* Remove outline from search input on focus */
 .navbar-search input:focus {
   outline: none;
 }
 
+/* Disabled state styling for search button */
 .navbar-search button:disabled {
   background-color: #e78787;
   cursor: not-allowed;
 }
 
+/* Search results dropdown styling */
 .search-results {
   position: absolute;
   top: 100%;
@@ -192,10 +214,12 @@
   border-radius: 4px;
 }
 
+/* Search result list items */
 .search-results li {
   list-style: none;
 }
 
+/* Search result buttons styling */
 .search-results button {
   width: 100%;
   padding: 10px;
@@ -205,13 +229,14 @@
   cursor: pointer;
 }
 
+/* Hover effect for search result buttons */
 .search-results button:hover {
   background-color: #f0f0f0;
   border-radius: 4px;
 }
 
 
-/* Responsive Styling */
+/* Responsive Styling for screens with max-width 768px */
 @media (max-width: 768px) {
   .navbar-search {
     width: 100%;
@@ -233,6 +258,7 @@
   .search-results {
     width: 100%;
   }
+
   .navbar-links {
     display: none;
     flex-direction: column;
@@ -242,11 +268,11 @@
     top: 60px;
     left: 50%;
     transform: translateX(-50%);
-    width: 80%; /* Begränsa bredden */
-    max-width: 300px; /* Maximera bredden */
+    width: 80%; /* Limit width */
+    max-width: 300px; /* Maximize width */
     padding: 20px;
-    border-radius: 8px; /* Rundade hörn */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Lägg till skugga */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow */
     z-index: 999;
   }
 
@@ -255,11 +281,11 @@
   }
 
   .hamburger {
-    display: block; /* Visas på små skärmar */
+    display: block; /* Visible on small screens */
   }
 
   .close-button {
-    display: block; /* Visas bara på små skärmar */
+    display: block; /* Visible only on small screens */
     text-align: center;
     font-size: 1.5rem;
     cursor: pointer;
@@ -282,18 +308,12 @@
     top: 6px;
     border-radius: 40px;
     background: #a8a8a8a3;
+  }
 }
 
-
-
-
-
-
-  }
-
-
+/* Hide close button on screens wider than 768px */
 @media (min-width: 769px) {
   .close-button {
-    display: none; /* Döljer stängningsknappen på stora skärmar */
+    display: none; /* Hide close button on large screens */
   }
 }

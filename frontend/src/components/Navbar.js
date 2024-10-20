@@ -1,7 +1,8 @@
+// src/components/Navbar.js
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
-import searchData from "./searchData"; // Importera searchData
+import searchData from "./searchData"; // Import search data
 import "./Navbar.css";
 
 function Navbar() {
@@ -13,28 +14,32 @@ function Navbar() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredResults, setFilteredResults] = useState([]);
 
+  // Handle user logout
   const handleLogout = () => {
     logout();
     navigate("/login");
     setMenuOpen(false);
-    setMessage("Du har loggats ut.");
+    setMessage("You have been logged out.");
     setTimeout(() => setMessage(null), 3000);
   };
 
+  // Toggle mobile menu
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
 
+  // Toggle services dropdown
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
 
+  // Close dropdown and menu when a link is clicked
   const handleDropdownLinkClick = () => {
     setDropdownOpen(false);
     setMenuOpen(false);
   };
 
-  // Funktion för att hantera sökförändringar
+  // Handle search input changes
   const handleSearchChange = (e) => {
     const query = e.target.value;
     setSearchQuery(query);
@@ -49,7 +54,7 @@ function Navbar() {
     }
   };
 
-  // Funktion för att navigera till vald sida
+  // Navigate to selected search result
   const handleResultClick = (path) => {
     navigate(path);
     setSearchQuery("");
@@ -57,18 +62,18 @@ function Navbar() {
     setMenuOpen(false);
   };
 
-  // Funktion för att hantera formulärinsändning (valfritt)
+  // Handle search form submission
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     if (searchQuery.trim() !== "") {
-      // Om du vill navigera direkt till en specifik sida baserat på sökningen
+      // Navigate directly to a specific page based on search
       const exactMatch = searchData.find(
         (item) => item.name.toLowerCase() === searchQuery.toLowerCase()
       );
       if (exactMatch) {
         handleResultClick(exactMatch.path);
       } else {
-        // Om ingen exakt matchning, navigera till första filtrerade resultat
+        // If no exact match, navigate to first filtered result
         if (filteredResults.length > 0) {
           handleResultClick(filteredResults[0].path);
         }
@@ -79,9 +84,12 @@ function Navbar() {
   return (
     <>
       <nav className="navbar">
+        {/* Logo */}
         <div className="navbar-logo">
           <Link to="/">Clean Master</Link>
         </div>
+        
+        {/* Navigation Links */}
         <ul className={`navbar-links ${menuOpen ? "show" : ""}`}>
           <li>
             <Link to="/" onClick={() => setMenuOpen(false)}>
@@ -98,6 +106,8 @@ function Navbar() {
               Offers
             </Link>
           </li>
+          
+          {/* Services Dropdown */}
           <li className="services-dropdown">
             <button onClick={toggleDropdown} className="dropdown-button">
               Services
@@ -105,18 +115,12 @@ function Navbar() {
             {dropdownOpen && (
               <ul className="dropdown-menu">
                 <li>
-                  <Link
-                    to="/services/residential"
-                    onClick={handleDropdownLinkClick}
-                  >
+                  <Link to="/services/residential" onClick={handleDropdownLinkClick}>
                     Residential Cleaning
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to="/services/commercial"
-                    onClick={handleDropdownLinkClick}
-                  >
+                  <Link to="/services/commercial" onClick={handleDropdownLinkClick}>
                     Commercial Cleaning
                   </Link>
                 </li>
@@ -131,10 +135,7 @@ function Navbar() {
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to="/services/post-construction"
-                    onClick={handleDropdownLinkClick}
-                  >
+                  <Link to="/services/post-construction" onClick={handleDropdownLinkClick}>
                     Post-Construction Cleaning
                   </Link>
                 </li>
@@ -152,6 +153,7 @@ function Navbar() {
             </Link>
           </li>
 
+          {/* User Authentication Links */}
           {isLoggedIn ? (
             <>
               <li>
@@ -179,21 +181,23 @@ function Navbar() {
               </Link>
             </li>
           )}
+
+          {/* Close Button for Mobile Menu */}
           <li className="close-button">
             <button onClick={() => setMenuOpen(false)}>✕</button>
           </li>
 
-          {/* Sökrutan */}
+          {/* Search Bar */}
           <li className="navbar-search">
             <form onSubmit={handleSearchSubmit}>
               <input
                 type="text"
-                placeholder="Sök..."
+                placeholder="Search..."
                 value={searchQuery}
                 onChange={handleSearchChange}
               />
               <button type="submit" disabled={!searchQuery.trim()}>
-                Sök
+                Search
               </button>
             </form>
             {filteredResults.length > 0 && (
@@ -209,10 +213,14 @@ function Navbar() {
             )}
           </li>
         </ul>
+
+        {/* Hamburger Menu Button for Mobile */}
         <button className="hamburger" onClick={toggleMenu}>
           ☰
         </button>
       </nav>
+
+      {/* Success Message Alert */}
       {message && <div className="message-box">{message}</div>}
     </>
   );

@@ -1,3 +1,4 @@
+// src/pages/LoginPage.js
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
@@ -14,21 +15,20 @@ function LoginPage() {
   const { login } = useAuth();
   const API_URL = process.env.REACT_APP_API_URL;
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const response = await axios.post(`${API_URL}/api/users/login`,
-        {
-          email,
-          password,
-        }
-      );
+      const response = await axios.post(`${API_URL}/api/users/login`, {
+        email,
+        password,
+      });
       console.log("User logged in:", response.data);
 
-      login(response.data); // Ändrad här: skickar hela användarobjektet
+      login(response.data); // Send entire user object
       setIsLoggedIn(true);
-      setTimeout(() => navigate("/profile"), 2000);
+      setTimeout(() => navigate("/profile"), 2000); // Redirect after 2 seconds
     } catch (err) {
       setError(err.response.data.message);
       setIsLoading(false);
@@ -38,37 +38,47 @@ function LoginPage() {
   return (
     <div className="login-container">
       <div className="login-box">
+        {/* Login Title */}
         <h1 className="login-title">Welcome Back</h1>
+        
+        {/* Login Form */}
         <form onSubmit={handleSubmit} className="login-form">
+          {/* Email Input */}
           <div className="input-group">
             <label htmlFor="email">Email</label>
             <input
               type="email"
               id="email"
-              placeholder="Ange din email"
+              placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
+          
+          {/* Password Input */}
           <div className="input-group">
-            <label htmlFor="password">Lösenord</label>
+            <label htmlFor="password">Password</label>
             <input
               type="password"
               id="password"
-              placeholder="Ange ditt lösenord"
+              placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
+          
+          {/* Submit Button */}
           <button type="submit" className="login-button" disabled={isLoading}>
             {isLoading ? <div className="loading-spinner"></div> : "Login"}
           </button>
         </form>
+        
+        {/* Success Message and Firework Animation */}
         {isLoggedIn && (
           <>
-            <p className="success-message">Inloggning lyckades! 🎉💃</p>
+            <p className="success-message">Login successful! 🎉💃</p>
             <div className="firework-container">
               <div className="firework"></div>
               <div className="firework"></div>
@@ -76,11 +86,15 @@ function LoginPage() {
             </div>
           </>
         )}
+        
+        {/* Error Message */}
         {error && <p className="error-message">{error}</p>}
+        
+        {/* Footer with Register Link */}
         <div className="login-footer">
-          Har du inget konto?{" "}
+          Don't have an account?{" "}
           <Link to="/register" className="register-link">
-            Registrera här
+            Register here
           </Link>
         </div>
       </div>

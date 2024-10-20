@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./ProfilePage.css";
@@ -12,9 +13,7 @@ const ProfilePage = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
   const [profileImage, setProfileImage] = useState(null);
-  const [bookingsWithUnreadMessages, setBookingsWithUnreadMessages] = useState(
-    []
-  );
+  const [bookingsWithUnreadMessages, setBookingsWithUnreadMessages] = useState([]);
   const [allMessages, setAllMessages] = useState([]);
 
   const API_URL = process.env.REACT_APP_API_URL;
@@ -29,6 +28,7 @@ const ProfilePage = () => {
       };
 
       try {
+        // Fetch user profile
         const { data: userData } = await axios.get(
           `${API_URL}/api/users/profile`,
           config
@@ -38,7 +38,7 @@ const ProfilePage = () => {
         setProfileImage(userData.profileImage);
       } catch (err) {
         setMessage(
-          `Fel vid hämtning av data: ${
+          `Error fetching data: ${
             err.response?.data?.message || err.message
           }`
         );
@@ -54,24 +54,25 @@ const ProfilePage = () => {
       };
 
       try {
+        // Fetch user bookings
         const { data: bookingsData } = await axios.get(
           `${API_URL}/api/bookings/mybookings`,
           config
         );
         setBookings(bookingsData);
 
-        // Hittar bokningar med olästa meddelanden
+        // Find bookings with unread messages
         const unreadMessages = bookingsData.filter(
           (booking) => booking.message && !booking.messageRead
         );
         setBookingsWithUnreadMessages(unreadMessages);
 
-        // Hämta alla meddelanden
+        // Fetch all messages
         const messages = bookingsData.filter((booking) => booking.message);
         setAllMessages(messages);
       } catch (err) {
         setMessage(
-          `Fel vid hämtning av bokningar: ${
+          `Error fetching bookings: ${
             err.response?.data?.message || err.message
           }`
         );
@@ -82,7 +83,7 @@ const ProfilePage = () => {
     fetchUserBookings();
   }, [API_URL]);
 
-  // Hanterar namnändring
+  // Handle name change
   const handleNameChange = async () => {
     if (!editName) return;
     const token = localStorage.getItem("token");
@@ -92,26 +93,27 @@ const ProfilePage = () => {
       },
     };
     try {
+      // Update user name
       const { data } = await axios.put(
         `${API_URL}/api/users/profile/name`,
         { name: editName },
         config
       );
       setUser({ ...user, name: data.name });
-      setMessage("Namn uppdaterat!");
+      setMessage("Name updated successfully!");
     } catch (err) {
       setMessage(
-        `Fel vid uppdatering av namn: ${
+        `Error updating name: ${
           err.response?.data?.message || err.message
         }`
       );
     }
   };
 
-  // Hanterar lösenordsändring
+  // Handle password change
   const handlePasswordChange = async () => {
     if (editPassword !== confirmPassword) {
-      setMessage("Lösenorden matchar inte!");
+      setMessage("Passwords do not match!");
       return;
     }
     const token = localStorage.getItem("token");
@@ -121,24 +123,25 @@ const ProfilePage = () => {
       },
     };
     try {
+      // Update user password
       await axios.put(
         `${API_URL}/api/users/profile/password`,
         { password: editPassword },
         config
       );
-      setMessage("Lösenord uppdaterat!");
+      setMessage("Password updated successfully!");
       setEditPassword("");
       setConfirmPassword("");
     } catch (err) {
       setMessage(
-        `Fel vid uppdatering av lösenord: ${
+        `Error updating password: ${
           err.response?.data?.message || err.message
         }`
       );
     }
   };
 
-  // Hanterar bilduppladdning
+  // Handle profile image upload
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -155,23 +158,24 @@ const ProfilePage = () => {
     };
 
     try {
+      // Upload profile image
       const { data } = await axios.put(
         `${API_URL}/api/users/profile/image`,
         formData,
         config
       );
       setProfileImage(data.imageUrl);
-      setMessage("Profilbild uppdaterad!");
+      setMessage("Profile image updated successfully!");
     } catch (err) {
       setMessage(
-        `Fel vid uppladdning av bild: ${
+        `Error uploading image: ${
           err.response?.data?.message || err.message
         }`
       );
     }
   };
 
-  // Markera meddelande som läst
+  // Mark message as read
   const markMessageAsRead = async (bookingId) => {
     const token = localStorage.getItem("token");
     const config = {
@@ -181,12 +185,13 @@ const ProfilePage = () => {
     };
 
     try {
+      // Mark message as read
       await axios.put(
         `${API_URL}/api/bookings/${bookingId}/markAsRead`,
         {},
         config
       );
-      // Uppdatera state
+      // Update state
       setBookingsWithUnreadMessages(
         bookingsWithUnreadMessages.filter(
           (booking) => booking._id !== bookingId
@@ -200,79 +205,84 @@ const ProfilePage = () => {
         )
       );
     } catch (err) {
-      console.error("Kunde inte markera meddelande som läst:", err);
+      console.error("Could not mark message as read:", err);
     }
   };
 
-  if (!user) return <div>Laddar...</div>;
+  if (!user) return <div>Loading...</div>;
 
   return (
     <div className="profile-container">
-      <h1>Välkommen, {user.name}</h1>
+      {/* Welcome message */}
+      <h1>Welcome, {user.name}</h1>
       <p>Email: {user.email}</p>
 
+      {/* Profile image and upload */}
       <div className="profile-image">
         <img
           src={
             profileImage ? `${API_URL}${profileImage}` : "default-image-url.png"
           }
-          alt="Profil"
+          alt="Profile"
         />
         <input type="file" onChange={handleImageUpload} />
       </div>
 
+      {/* Profile information */}
       <div className="profile-info">
+        {/* Change Name Section */}
         <div className="profile-section">
-          <h2>Ändra namn</h2>
+          <h2>Change Name</h2>
           <input
             type="text"
             value={editName}
             onChange={(e) => setEditName(e.target.value)}
           />
-          <button onClick={handleNameChange}>Spara namn</button>
+          <button onClick={handleNameChange}>Save Name</button>
         </div>
 
+        {/* Change Password Section */}
         <div className="profile-section">
-          <h2>Byt lösenord</h2>
+          <h2>Change Password</h2>
           <input
             type="password"
-            placeholder="Nytt lösenord"
+            placeholder="New Password"
             value={editPassword}
             onChange={(e) => setEditPassword(e.target.value)}
           />
           <input
             type="password"
-            placeholder="Bekräfta lösenord"
+            placeholder="Confirm Password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
-          <button onClick={handlePasswordChange}>Byt lösenord</button>
+          <button onClick={handlePasswordChange}>Change Password</button>
         </div>
       </div>
 
-      {/* Visa notis om nya meddelanden */}
+      {/* Notification for new messages */}
       {bookingsWithUnreadMessages.length > 0 && (
         <div className="notification">
-          <h2>Du har nya meddelanden!</h2>
+          <h2>You have new messages!</h2>
           {bookingsWithUnreadMessages.map((booking) => (
             <div key={booking._id} className="message">
               <p>
-                <strong>Från admin:</strong> {booking.message}
+                <strong>From admin:</strong> {booking.message}
               </p>
               <button
                 className="lastknapp"
                 onClick={() => markMessageAsRead(booking._id)}
               >
-                Markera som läst
+                Mark as Read
               </button>
             </div>
           ))}
         </div>
       )}
 
-      {/* Sektion för alla meddelanden */}
+      {/* All Messages Section */}
       <div className="messages-section">
-        <h2>Meddelanden</h2>
+        <h2>Messages</h2>
         {allMessages.length > 0 ? (
           allMessages.map((booking) => (
             <div
@@ -280,43 +290,44 @@ const ProfilePage = () => {
               className={`message ${booking.messageRead ? "read" : "unread"}`}
             >
               <p>
-                <strong>Bokning:</strong> {booking.service}
+                <strong>Booking:</strong> {booking.service}
               </p>
               <p>
-                <strong>Meddelande:</strong> {booking.message}
+                <strong>Message:</strong> {booking.message}
               </p>
               {!booking.messageRead && (
                 <button
                   className="lastknapp"
                   onClick={() => markMessageAsRead(booking._id)}
                 >
-                  Markera som läst
+                  Mark as Read
                 </button>
               )}
             </div>
           ))
         ) : (
-          <p>Inga meddelanden.</p>
+          <p>No messages.</p>
         )}
       </div>
 
-      {/* Bokningssektion */}
+      {/* Bookings Section */}
       <div className="bookings-section">
-        <h2>Mina bokningar</h2>
+        <h2>My Bookings</h2>
         {bookings.length > 0 ? (
           <ul className="bookings-list">
             {bookings.map((booking) => (
               <li key={booking._id}>
                 {booking.service} -{" "}
-                {new Date(booking.date).toLocaleDateString()} kl {booking.time}
+                {new Date(booking.date).toLocaleDateString()} at {booking.time}
               </li>
             ))}
           </ul>
         ) : (
-          <p>Inga bokningar hittades.</p>
+          <p>No bookings found.</p>
         )}
       </div>
 
+      {/* Success message */}
       {message && <p className="success-message">{message}</p>}
     </div>
   );
