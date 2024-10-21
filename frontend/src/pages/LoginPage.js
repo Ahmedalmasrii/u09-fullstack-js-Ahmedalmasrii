@@ -1,4 +1,3 @@
-// src/pages/LoginPage.js
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
@@ -24,25 +23,26 @@ function LoginPage() {
         email,
         password,
       });
-  
+
       console.log("User logged in:", response.data);
-  
+
       // Kolla om användaren har ett temporärt lösenord
       if (response.data.isTemporaryPassword) {
-        setError("You are using a temporary password. Please reset your password.");
+        setError(
+          "You are using a temporary password. Please reset your password."
+        );
         setTimeout(() => navigate("/reset-password"), 2000); // Omdirigera till lösenordsbytes-sidan
       } else {
         login(response.data); // Skicka hela användarobjektet
         setIsLoggedIn(true);
         setTimeout(() => navigate("/profile"), 2000); // Omdirigera efter 2 sekunder
       }
-  
     } catch (err) {
       setError(err.response.data.message);
       setIsLoading(false);
     }
   };
-  
+
   return (
     <div className="login-container">
       <div className="login-box">

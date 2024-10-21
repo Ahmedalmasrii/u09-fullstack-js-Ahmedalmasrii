@@ -19,8 +19,8 @@ import Footer from "./components/Footer";
 
 import AdminRoute from "./components/AdminRoutes";
 
-import { AuthProvider } from "./components/AuthContext"; // Importera AuthProvider
-import PrivateRoute from "./components/PrivateRoute"; // Skapa en PrivateRoute-komponent om du inte redan har en
+import { AuthProvider } from "./components/AuthContext"; 
+import PrivateRoute from "./components/PrivateRoute"; 
 
 // Registrerar Service Worker
 if ("serviceWorker" in navigator) {

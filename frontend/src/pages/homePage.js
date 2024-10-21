@@ -1,4 +1,3 @@
-// src/pages/HomePage.js
 import React, { useState } from "react";
 import "./homePage.css";
 import "../components/Navbar.css";
@@ -163,7 +162,7 @@ function HomePage() {
               <p>Senior Cleaner</p>
             </div>
             <div className="team-member">
-            <img
+              <img
                 src="/images/staff2.jpg"
                 alt="Team Member 1"
                 className="team-image"
@@ -172,7 +171,7 @@ function HomePage() {
               <p>Commercial Specialist</p>
             </div>
             <div className="team-member">
-            <img
+              <img
                 src="/images/staff3.jpg"
                 alt="Team Member 1"
                 className="team-image"
