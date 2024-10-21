@@ -1,5 +1,5 @@
 .homepage {
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   color: #333;
 }
 
@@ -28,32 +28,32 @@
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: rgba(0, 0, 0, 0.6);
-  padding: 30px;
+  padding: 20px;
   border-radius: 10px;
   width: 90%;
-  max-width: 700px;
+  max-width: 600px;
 }
 
 .header h1 {
-  font-size: 48px;
-  margin-bottom: 15px;
+  font-size: 36px;
+  margin-bottom: 10px;
 }
 
 .header p {
-  font-size: 20px;
-  margin-bottom: 25px;
+  font-size: 16px;
+  margin-bottom: 20px;
 }
 
 .cta-button {
-  padding: 12px 30px;
-  font-size: 18px;
+  padding: 10px 20px;
+  font-size: 16px;
   color: #fff;
   background-color: #28a745;
-  /* Grön färg */
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
+  margin-top: 20px;
 }
 
 .cta-button:hover {
@@ -66,7 +66,6 @@
   background-color: #f9f9f9;
 }
 
-/* About Us Section */
 .about-us {
   max-width: 900px;
   margin: 0 auto 60px auto;
@@ -216,10 +215,6 @@
   transform: scale(1.05);
 }
 
-
-
-
-
 .team {
   max-width: 1100px;
   margin: 0 auto 60px auto;
@@ -306,7 +301,7 @@
 }
 
 .faq-item h4::after {
-  content: '+';
+  content: "+";
   position: absolute;
   right: 0;
   top: 0;
@@ -388,6 +383,28 @@ footer p {
 
 /* Media Queries för Responsiv Design */
 @media (min-width: 768px) {
+  .header-content {
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 28px;
+  }
+
+  .header p {
+    font-size: 14px;
+  }
+
+  .cta-button {
+    padding: 10px 25px;
+    font-size: 16px;
+    margin-top: 25px;
+  }
+
+  .main-content {
+    padding: 20px 10px;
+  }
+
   .gallery-image {
     width: 200px;
     height: 150px;
