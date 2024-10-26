@@ -12,7 +12,7 @@ const BookingPage = () => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
-  const [showPopup, setShowPopup] = useState(false); // Hanterar popup-öppning
+  const [showPopup, setShowPopup] = useState(false);
   const [discountCode, setDiscountCode] = useState("");
 
   const API_URL = process.env.REACT_APP_API_URL;
@@ -26,6 +26,14 @@ const BookingPage = () => {
 
   const handleBooking = async () => {
     const token = localStorage.getItem("token");
+
+    if (!token) {
+      // Visa popup för inloggningskrav
+      setMessage("Du måste vara inloggad för att kunna göra en bokning.");
+      setShowPopup(true);
+      return;
+    }
+
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -42,20 +50,18 @@ const BookingPage = () => {
           name,
           email,
           phone,
-          discountCode, // Skicka med rabattkoden
+          discountCode,
         },
         config
       );
-      setMessage(
-        "Your booking has been received! We look forward to serving you."
-      );
-      setShowPopup(true); // Visa popup vid lyckad bokning
+      setMessage("Din bokning har tagits emot! Vi ser fram emot att hjälpa dig.");
+      setShowPopup(true);
     } catch (err) {
       setMessage(`Error: ${err.response?.data?.message || err.message}`);
+      setShowPopup(true);
     }
   };
 
-  // Hanterar stängning av popup och rensar formuläret
   const handlePopupClose = () => {
     setShowPopup(false);
     setService("");
@@ -132,13 +138,10 @@ const BookingPage = () => {
       {showPopup && (
         <div className="popup">
           <div className="popup-content">
-            <h2>Booking Successful!</h2>
-            <p>
-              Your booking has been successfully registered. We look forward to
-              serving you.
-            </p>
+            <h2>{message === "Du måste vara inloggad för att kunna göra en bokning." ? "Inloggning krävs" : "Bokning lyckades!"}</h2>
+            <p>{message}</p>
             <button onClick={handlePopupClose} className="btn btn-success">
-              Done
+              Stäng
             </button>
           </div>
         </div>
